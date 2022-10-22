@@ -4,7 +4,7 @@ function getFullName(userEntity) {
 }
 const user = {
     firstname: 'Anton',
-    surname: 'Popadan',
+    surname: 'Pos',
     city: 'Minsk',
     age: 14,
     skills: {
