@@ -1,8 +1,5 @@
-const skills: [number, string] = [1, 'Dev'];
+const skill: readonly [number, string] = [1, 'Dev'];
 
-const [id, skillName] = skills
+const skills: ReadonlyArray<string> = ['Dev', 'DevOps'];
 
-console.log(id + " - id");
-console.log(skillName + " - skillName");
-
-const arr: [number, string, ...boolean[]] = [1, 'Lalala', true, true, true]
+console.log(skills);

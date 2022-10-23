@@ -1,4 +1,4 @@
 "use strict";
-const skills = [1, 'Dev'];
-const [id, skillName] = skills;
-console.log(id + "- id");
+const skill = [1, 'Dev'];
+const skills = ['Dev', 'DevOps'];
+console.log(skills);
