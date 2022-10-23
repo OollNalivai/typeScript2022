@@ -1,13 +1,8 @@
-const skills: string[] = ['Dev', 'DevOps', 'Testing', 'Read'];
+const skills: [number, string] = [1, 'Dev'];
 
+const [id, skillName] = skills
 
-for (const skill of skills) {
-    console.log(skill.toUpperCase());
-}
+console.log(id + " - id");
+console.log(skillName + " - skillName");
 
-const res = skills
-    .filter((s: string) => s != 'DevOps')
-    .map(s => s + '! ')
-    .reduce((a, b) => a + b);
-
-console.log(res)
+const arr: [number, string, ...boolean[]] = [1, 'Lalala', true, true, true]
