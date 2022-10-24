@@ -1,37 +1,50 @@
-enum StatusCode {
-    SUCCESS = 1,
-    IN_PROCESS,
-    FAILD
+enum QuestionStatus {
+    Published = 'published',
+    Draft = 'draft',
+    Deleted = 'deleted'
 }
 
-enum StatusCodeStr {
-    SUCCESS = 'a',
-    IN_PROCESS = 'c',
-    FAILD = 'f'
+async function getFaqs(
+    req: {
+        topicId: number;
+        status?: QuestionStatus;
+    }): Promise<{
+    question: string;
+    answer: string;
+    tags: string[];
+    likes: number;
+    status: QuestionStatus;
+}[]> {
+    const res = await fetch('/faqs', {
+        method: 'POST',
+        body: JSON.stringify(req)
+    });
+    const data: {
+        question: string;
+        answer: string;
+        tags: string[];
+        likes: number;
+        status: QuestionStatus;
+    }[] = await res.json();
+    return data;
 }
 
-enum StatusCodeGeter {
-    SUCCESS = 1,
-    IN_PROCESS = 'h',
-    FAILD = 'f'
-}
 
-const res = {
-    message: 'Платеж успешен',
-    status: StatusCode.SUCCESS
-}
-
-function action(status: StatusCodeGeter) {
-    console.log('res = ' + status )
-}
-
-const enum Roles {
-    ADMIN = 1,
-    USER = 2
-}
-
-const res2 = Roles.ADMIN;
-
-action(StatusCodeGeter.FAILD)
-
-console.log(res.status === StatusCode.SUCCESS);
+/* Запрос */
+// {
+//     "topicId": 5,
+//     "status": "published" // "draft", "deleted"
+// }
+/* Ответ */
+// [
+//     {
+//         "question": "Как осуществляется доставка?",
+//         "answer": "быстро!",
+//         "tags": [
+//             "popular",
+//             "new"
+//         ],
+//         "likes": 3,
+//         "status": "published"
+//     }
+// ]
