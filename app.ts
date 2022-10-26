@@ -1,15 +1,33 @@
-enum options {
-    yes = 'yes',
-    no = 'no'
+function LogId(id: string | number | boolean) {
+    if (typeof id === 'string') {
+        console.log(id);
+    } else if(typeof id === 'number') {
+        console.log(id);
+    } else {
+        console.log(id);
+    }
 }
 
-const enum options2 {
-    yes = 'yes',
-    no = 'no'
+function logError(err: string | string[]) {
+    if( Array.isArray(err)) {
+        console.log(err);
+    } else {
+        console.log(err);
+    }
 }
 
-const b = 2323;
+function logObject (obj: {a: number} | {b: number}) {
+    if ('a' in obj ) {
+        console.log(obj.a)
+    } else {
+        console.log(obj.b)
+    }
+}
 
-const fun = (opt) => console.log(opt + opt);
-
-fun(options.yes)
+function logMultipleIds(a: string | number, b: string | boolean) {
+    if( a === b) {
+        console.log(a.toUpperCase())
+    } else {
+        console.log(b)
+    }
+}
