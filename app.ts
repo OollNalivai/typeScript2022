@@ -1,20 +1,30 @@
-function fetchWidthAuth(url: string, method: 'post' | 'get'): 1 | -1 {
-    console.log(method)
+type httpMethod = 'post' | 'get';
+
+function fetchWidthAuth(url: string, method: httpMethod): 1 | -1 {
+    console.log(method);
     return -1;
 }
 
-const a = 'sasd';
-let b: 'dsfsdkasd' = 'dsfsdkasd';
+type User = {
+    name: string,
+    age: number,
+    skills: string[]
+}
 
-fetchWidthAuth('s', 'post');
+type Role = {
+    name: string
+    id: number
+}
 
-const method = 'post';
-fetchWidthAuth('s', method);
+type UserWithRole = User & Role;
+let use: UserWithRole = {
+    name: 'Poly',
+    age: 22,
+    skills: ['1', '2'],
+    id: 2
+};
 
-let method2: 'post' = 'post';
-fetchWidthAuth('s', method2);
-
-let method3 = 'get';
-fetchWidthAuth('s', method3 as 'get');
-
-
+type UserWithRole_2 = {
+    user: User,
+    role: Role
+}
