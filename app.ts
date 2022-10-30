@@ -1,37 +1,18 @@
 interface User {
     name: string,
-    age: number,
-    skills: string[]
-
-    log: (id: number) => string
 }
 
-interface Role {
-    roleId: number;
+interface User {
+    age: number
 }
 
-interface UserWithRole extends User, Role {
-    createdAt: Date
+const user: User = {
+    name: 'ddd',
+    age: 23
+} // адеватное дооопределение например в библиотеке, так разделять плохая идея
+
+type ID = string | number;
+
+interface IDI {
+    ID: string | number
 }
-
-let use: UserWithRole = {
-    name: 'Poly',
-    age: 22,
-    skills: ['1', '2'],
-    roleId: 1,
-    createdAt: new Date(),
-
-    log(id) {
-        return '';
-    }
-};
-
-interface UserDic {
-    [index: number]: User
-}
-
-type UserDic2 = {
-    [index: number]: User
-}
-
-type ud = Record<number, User>
