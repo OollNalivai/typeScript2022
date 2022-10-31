@@ -1,18 +1,23 @@
 interface User {
-    name: string,
-}
-
-interface User {
-    age: number
+    login: string,
+    password?: string
 }
 
 const user: User = {
-    name: 'ddd',
-    age: 23
-} // адеватное дооопределение например в библиотеке, так разделять плохая идея
+    login: 'a@a.re',
+    password: '123123'
+};
 
-type ID = string | number;
+function multiply(first: number, second?: number): number {
+    // return !second ? first * first : first * second
+    if (!second) {
+        return first * first;
+    }
+    return first * second;
+}
+multiply(5)
 
-interface IDI {
-    ID: string | number
+interface UserPro {
+    login: string,
+    password?: string
 }

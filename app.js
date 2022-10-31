@@ -1,5 +1,13 @@
 "use strict";
 const user = {
-    name: 'ddd',
-    age: 23
-}; // адеватное дооопределение например в библиотеке, так разделять плохая идея
+    login: 'a@a.re',
+    password: '123123'
+};
+function multiply(first, second) {
+    // return !second ? first * first : first * second
+    if (!second) {
+        return first * first;
+    }
+    return first * second;
+}
+multiply(5);
