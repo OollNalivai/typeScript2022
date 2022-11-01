@@ -1,34 +1,38 @@
-interface User {
-    login: string,
-    password?: string
+interface Payment {
+    sum: number,
+    from: number,
+    to: number
 }
 
-const user: User = {
-    login: 'a@a.re',
-    password: '123123'
-};
-
-function multiply(first: number, second?: number): number {
-    if (!second) {
-        return first * first;
-    }
-    return first * second;
+interface PaymentRequest extends Payment {
 }
 
-multiply(5)
-
-interface UserPro {
-    login: string,
-    password?: {
-        type: 'primary' | 'secondary'
-    }
+enum PaymentStatus {
+    Success = 'success',
+    Failed = 'failed'
 }
 
-function testPass(user: UserPro) {
-    const t = user.password?.type;
-    const tl = user.password ? user.password.type : undefined;
+interface DataSuccess extends Payment {
+    databaseId: number;
 }
 
-function test(param?: string) {
-    const t = param ?? multiply(5);
+interface DataFailed {
+    errorMessage: string,
+    errorCode: number
 }
+
+interface ResponseSuccess {
+    status: PaymentStatus.Success,
+    data: DataSuccess
+}
+
+interface ResponseFailed {
+    status: PaymentStatus.Failed,
+    data: DataFailed
+}
+
+// function get(data: PaymentRequest): ResponseSuccess | ResponseFailed {
+//
+// }
+
+
