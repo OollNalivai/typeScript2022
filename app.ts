@@ -9,15 +9,26 @@ const user: User = {
 };
 
 function multiply(first: number, second?: number): number {
-    // return !second ? first * first : first * second
     if (!second) {
         return first * first;
     }
     return first * second;
 }
+
 multiply(5)
 
 interface UserPro {
     login: string,
-    password?: string
+    password?: {
+        type: 'primary' | 'secondary'
+    }
+}
+
+function testPass(user: UserPro) {
+    const t = user.password?.type;
+    const tl = user.password ? user.password.type : undefined;
+}
+
+function test(param?: string) {
+    const t = param ?? multiply(5);
 }
