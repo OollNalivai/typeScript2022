@@ -1,9 +1,17 @@
 "use strict";
-var PaymentStatus;
-(function (PaymentStatus) {
-    PaymentStatus["Success"] = "success";
-    PaymentStatus["Failed"] = "failed";
-})(PaymentStatus || (PaymentStatus = {}));
-// function get(data: PaymentRequest): ResponseSuccess | ResponseFailed {
-//
-// }
+function logID(id) {
+    console.log(id);
+}
+const a = logID(1);
+function multiply(f, s) {
+    if (!s) {
+        return f * f;
+    }
+    return f * s;
+}
+const f1 = () => {
+};
+const f2 = () => {
+    return true;
+};
+const b = f2();

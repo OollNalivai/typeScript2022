@@ -1,38 +1,24 @@
-interface Payment {
-    sum: number,
-    from: number,
-    to: number
+function logID(id: string | number): void {
+    console.log(id);
 }
 
-interface PaymentRequest extends Payment {
+const a = logID(1);
+
+function multiply(f: number, s?: number) {
+    if(!s) {
+        return f * f;
+    }
+    return f * s;
 }
 
-enum PaymentStatus {
-    Success = 'success',
-    Failed = 'failed'
+type voidFunc = () => void
+
+const f1: voidFunc = () => {
+
 }
 
-interface DataSuccess extends Payment {
-    databaseId: number;
+const f2: voidFunc = () => {
+    return true
 }
 
-interface DataFailed {
-    errorMessage: string,
-    errorCode: number
-}
-
-interface ResponseSuccess {
-    status: PaymentStatus.Success,
-    data: DataSuccess
-}
-
-interface ResponseFailed {
-    status: PaymentStatus.Failed,
-    data: DataFailed
-}
-
-// function get(data: PaymentRequest): ResponseSuccess | ResponseFailed {
-//
-// }
-
-
+const b = f2();
