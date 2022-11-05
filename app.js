@@ -15,3 +15,11 @@ const f2 = () => {
     return true;
 };
 const b = f2();
+const skills = ['dev', 'DevOps'];
+const user = {
+    sk: ['Feed']
+};
+skills.forEach((skill) => {
+    user.sk.push(skill);
+});
+console.log(user);
