@@ -1,35 +1,38 @@
-function logID(id: string | number): void {
-    console.log(id);
-}
+let input: unknown;
 
-const a = logID(1);
+input = 3;
+input = ['asd', 'asd'];
 
-function multiply(f: number, s?: number) {
-    if(!s) {
-        return f * f;
+function run(i: unknown) {
+    if (typeof i == 'number') {
+        i++;
+    } else {
+        i;
     }
-    return f * s;
+    return console.log(i);
 }
 
-type voidFunc = () => void
+run(input);
 
-const f1: voidFunc = () => {
-
+async function getData() {
+    try {
+        await fetch('');
+    } catch (error) {
+        if (error instanceof Error) {
+            console.log(error.message);
+        }
+    }
 }
 
-const f2: voidFunc = () => {
-    return true
+async function getDataForce() {
+    try {
+        await fetch('');
+    } catch (error) {
+        const e = error as Error;
+        console.log(e.message); // только если 100% понимаешь .что ошибка, иначе код упадет
+    }
 }
 
-const b = f2();
+type U1 = unknown | number
 
-const skills = ['dev', 'DevOps']
-
-const user = {
-    sk: ['Feed']
-}
-
-skills.forEach((skill) => {
-    user.sk.push(skill)
-})
-console.log(user)
+type I1 = unknown & string
