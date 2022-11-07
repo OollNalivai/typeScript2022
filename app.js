@@ -1,35 +1,9 @@
 "use strict";
-function generateError(message) {
-    throw new Error(message);
-}
-function dumpError() {
-    while (true) {
-    }
-}
-function rec() {
-    return rec();
-}
-const a0 = undefined;
-let a;
-function processAction(action) {
-    switch (action) {
-        case 'refund':
-            //...
-            break;
-        case 'checkout':
-            //...
-            break;
-        default:
-            const _ = action;
-            throw new Error('Нет такого action');
-    }
-}
-function isString(x) {
-    if (typeof x === 'string') {
-        return true;
-    }
-    else if (typeof x === 'number') {
-        return false;
-    }
-    generateError('error111');
-}
+const n = null;
+const n1 = null;
+//"strictNullChecks": false
+//When type checking, take into account `null` and `undefined`
+const n2 = null;
+const n3 = null;
+const n4 = null;
+const n5 = null;
