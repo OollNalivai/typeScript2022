@@ -1,10 +1,22 @@
 const n: null = null;
 const n1: any = null;
 
-//"strictNullChecks": false
-//When type checking, take into account `null` and `undefined`
+interface User {
+    name: string;
+}
 
-const n2: number = null;
-const n3: string = null;
-const n4: boolean = null;
-const n5: undefined = null;
+function getUser() {
+    if (Math.random() > 0.5) {
+        return null;
+    } else {
+        return {
+            name: 'Alashey'
+        } as User;
+    }
+}
+
+const user = getUser();
+
+if (user) {
+    const n6 = user.name;
+}

@@ -1,9 +1,17 @@
 "use strict";
 const n = null;
 const n1 = null;
-//"strictNullChecks": false
-//When type checking, take into account `null` and `undefined`
-const n2 = null;
-const n3 = null;
-const n4 = null;
-const n5 = null;
+function getUser() {
+    if (Math.random() > 0.5) {
+        return null;
+    }
+    else {
+        return {
+            name: 'Alashey'
+        };
+    }
+}
+const user = getUser();
+if (user) {
+    const n6 = user.name;
+}
