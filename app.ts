@@ -31,29 +31,18 @@ interface IResponseFailed {
     data: IDataFailed;
 }
 
-function paymentStatusGuard(
-    res: IResponseSuccess | IResponseFailed):
-    res is IResponseSuccess {
-    return 'databaseId' in res.data;
-}
-
 type Res = IResponseSuccess | IResponseFailed
+
+function paymentStatusGuard(res: Res): res is IResponseSuccess {
+    return res.status === PaymentStatus.Success
+}
 
 function getIdFromData(res: Res): number {
     if(paymentStatusGuard(res)) {
-        console.log(res)
         return res.data.databaseId;
     } else {
         throw new Error(res.data.errorMessage);
     }
 }
-
-getIdFromData({
-    status: PaymentStatus.Failed,
-    data: {
-        errorMessage: '11111',
-        errorCode: 4008,
-    }
-})
 
 
