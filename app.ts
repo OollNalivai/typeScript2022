@@ -9,7 +9,8 @@ enum PaymentStatus {
     Failed = 'failed',
 }
 
-interface IPaymentRequest extends IPayment { }
+interface IPaymentRequest extends IPayment {
+}
 
 interface IDataSuccess extends IPayment {
     databaseId: number;
@@ -30,7 +31,29 @@ interface IResponseFailed {
     data: IDataFailed;
 }
 
-function payment(status: IPayment) {
-
+function paymentStatusGuard(
+    res: IResponseSuccess | IResponseFailed):
+    res is IResponseSuccess {
+    return 'databaseId' in res.data;
 }
-type f = (res: IResponseSuccess | IResponseFailed) => number
+
+type Res = IResponseSuccess | IResponseFailed
+
+function getIdFromData(res: Res): number {
+    if(paymentStatusGuard(res)) {
+        console.log(res)
+        return res.data.databaseId;
+    } else {
+        throw new Error(res.data.errorMessage);
+    }
+}
+
+getIdFromData({
+    status: PaymentStatus.Failed,
+    data: {
+        errorMessage: '11111',
+        errorCode: 4008,
+    }
+})
+
+
