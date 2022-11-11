@@ -1,45 +1,36 @@
-interface User {
-    name: string;
-    email: string;
-    login: string;
+interface IPayment {
+    sum: number;
+    from: number;
+    to: number;
 }
 
-const user: User = {
-    name: 'adasdas',
-    email: 'asd@asd.asd',
-    login: 'asdad'
-};
-
-interface Admin {
-    name: string,
-    role: number
+enum PaymentStatus {
+    Success = 'success',
+    Failed = 'failed',
 }
 
+interface IPaymentRequest extends IPayment { }
 
-function logId(id: string | number) {
-    if (isString(id)) {
-        console.log(id);
-    } else {
-        console.log(id);
-    }
+interface IDataSuccess extends IPayment {
+    databaseId: number;
 }
 
-function isString(x: string | number): x is string {
-    return typeof x === 'string';
+interface IDataFailed {
+    errorMessage: string;
+    errorCode: number;
 }
 
-function isAdmin(user: User | Admin): user is Admin {
-    return 'role' in user;
+interface IResponseSuccess {
+    status: PaymentStatus.Success;
+    data: IDataSuccess;
 }
 
-function isAdminAlternative(user: User | Admin): user is Admin {
-    return (user as Admin).role !== undefined;
+interface IResponseFailed {
+    status: PaymentStatus.Failed;
+    data: IDataFailed;
 }
 
-function setRoleZero(user: User | Admin) {
-    if (isAdmin(user)) {
-        user.role = 0;
-    } else {
-        throw new Error('Пользователь не админ');
-    }
+function payment(status: IPayment) {
+
 }
+type f = (res: IResponseSuccess | IResponseFailed) => number
