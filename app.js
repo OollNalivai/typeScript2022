@@ -1,17 +1,14 @@
 "use strict";
-var PaymentStatus;
-(function (PaymentStatus) {
-    PaymentStatus["Success"] = "success";
-    PaymentStatus["Failed"] = "failed";
-})(PaymentStatus || (PaymentStatus = {}));
-function paymentStatusGuard(res) {
-    return res.status === PaymentStatus.Success;
-}
-function getIdFromData(res) {
-    if (paymentStatusGuard(res)) {
-        return res.data.databaseId;
-    }
-    else {
-        throw new Error(res.data.errorMessage);
+class User {
+    constructor(name) {
+        this.name = name;
     }
 }
+const user = new User('Vasia');
+console.log(user);
+user.name = 'Pedro';
+console.log(user);
+class Admin {
+}
+const admin = new Admin();
+admin.role = 1;
