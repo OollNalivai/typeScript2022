@@ -6,20 +6,13 @@ class User {
     addSkill(skillOrSkills) {
         if (typeof skillOrSkills === 'string') {
             this.skills.push(skillOrSkills);
+            console.log(this.skills);
         }
         else {
-            this.skills.concat(skillOrSkills);
+            this.skills.push(...skillOrSkills);
+            console.log('string[]', this.skills);
         }
     }
 }
-new User().addSkill('213');
-new User().addSkill(['333']);
-function run(distance) {
-    if (typeof distance === 'number') {
-        return 1;
-    }
-    else {
-        return '';
-    }
-}
-run(123);
+const a = new User().addSkill('asdasd');
+const b = new User().addSkill(['111111', 'asdasd']);
