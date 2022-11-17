@@ -1,20 +1,17 @@
 class User {
-    skills: string[] = [];
+    _login: string;
+    password: string;
 
-    addSkill(skill: string);
-    addSkill(skill: string[]);
-    addSkill(skillOrSkills: string | string[]): void {
-        if (typeof skillOrSkills === 'string') {
-            this.skills.push(skillOrSkills);
+    set login(l: string) {
+        this._login = 'user-' + l;
+    }
 
-            console.log(this.skills)
-        } else {
-            this.skills.push(...skillOrSkills)
-
-            console.log('string[]', this.skills)
-        }
+    get login() {
+        return 'no_login'
     }
 }
 
-const a = new User().addSkill('asdasd');
-const b = new User().addSkill(['111111', 'asdasd']);
+const user = new User();
+user.login = 'petr'
+console.log(user);
+console.log(user.login);
