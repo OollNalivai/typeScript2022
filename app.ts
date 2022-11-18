@@ -1,14 +1,24 @@
 class User {
     _login: string;
-    password: string;
+    _password: string;
+    createdAt: Date;
 
     set login(l: string) {
         this._login = 'user-' + l;
+        this.createdAt = new Date();
     }
 
     get login() {
-        return 'no_login'
+        return this._login
     }
+
+    async getPassword(p: string) {
+        // await
+    }
+
+    // set password(p: string) {
+    //     //sync
+    // }
 }
 
 const user = new User();
