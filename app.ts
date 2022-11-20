@@ -1,27 +1,42 @@
-class User {
-    _login: string;
-    _password: string;
-    createdAt: Date;
+interface LoggerInterface {
+    log(...args: string[]): void;
 
-    set login(l: string) {
-        this._login = 'user-' + l;
-        this.createdAt = new Date();
-    }
+    test(...args: string[]): void;
 
-    get login() {
-        return this._login
-    }
-
-    async getPassword(p: string) {
-        // await
-    }
-
-    // set password(p: string) {
-    //     //sync
-    // }
+    error(...args: string[]): void;
 }
 
-const user = new User();
-user.login = 'petr'
-console.log(user);
-console.log(user.login);
+class Logger implements LoggerInterface {
+    error(...args: string[]): void {
+        console.log(...args);
+    }
+
+    async test(...args: string[]): Promise<void> {
+        ///
+    }
+
+    log(...args: string[]): void {
+        //отправить запрос во внешнюю систему
+        console.log();
+    }
+}
+
+interface Payable {
+    pay(paymentId: number): void;
+
+    price?: number;
+}
+
+interface Deletable {
+    delete(): void;
+}
+
+class User implements Payable, Deletable {
+    delete(): void {
+    }
+
+    pay(paymentId: number): void {
+        ///
+    }
+
+}
