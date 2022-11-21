@@ -1,42 +1,38 @@
-interface LoggerInterface {
-    log(...args: string[]): void;
+type PaymentStatus = 'new' | 'paid';
 
-    test(...args: string[]): void;
+class Payment {
+    id: number;
+    status: PaymentStatus = 'new';
 
-    error(...args: string[]): void;
-}
-
-class Logger implements LoggerInterface {
-    error(...args: string[]): void {
-        console.log(...args);
+    constructor(id: number) {
+        this.id = id;
     }
 
-    async test(...args: string[]): Promise<void> {
+    pay() {
+        this.status = 'paid';
+    }
+}
+
+class PersistedPayment extends Payment {
+    databaseId: number;
+    paidAt: Date;
+
+    constructor() {
+        const id = Math.random();
+        super(id);
+    }
+
+    save() {
         ///
     }
 
-    log(...args: string[]): void {
-        //отправить запрос во внешнюю систему
-        console.log();
+     override pay(date?: Date) {
+        super.pay();
+        if (date) {
+            this.paidAt = date;
+        }
     }
 }
 
-interface Payable {
-    pay(paymentId: number): void;
 
-    price?: number;
-}
-
-interface Deletable {
-    delete(): void;
-}
-
-class User implements Payable, Deletable {
-    delete(): void {
-    }
-
-    pay(paymentId: number): void {
-        ///
-    }
-
-}
+new PersistedPayment().save();
