@@ -1,70 +1,22 @@
-type PaymentStatus = 'new' | 'paid';
-
-class Payment {
-    id: number;
-    status: PaymentStatus = 'new';
-
-    constructor(id: number) {
-        this.id = id;
-    }
-
-    pay() {
-        this.status = 'paid';
-    }
-}
-
-class PersistedPayment extends Payment {
-    databaseId: number;
-    paidAt: Date;
-
-    constructor() {
-        const id = Math.random();
-        super(id);
-    }
-
-    save() {
-        ///
-    }
-
-    override pay(date?: Date) {
-        super.pay();
-        if (date) {
-            this.paidAt = date;
-        }
-    }
-}
-
-
-new PersistedPayment().save();
-
 class User {
-    name: string = 'user';
+    name: string;
 
-    constructor() {
-        console.log(this.name);
+    constructor(name: string) {
+        this.name = name;
     }
 }
 
-class Admin extends User {
-    name: string = 'admin';
-
-    constructor() {
-        super();
-        console.log(this.name);
+class Users extends Array<User> {
+    searchByName(name: string) {
+        return this.filter(u => u.name === name);
     }
 
-}
-
-new Admin();
-
-// new Error('');
-
-class HttpError extends Error {
-
-    code: number;
-
-    constructor(message: string, code) {
-        super(message);
-        this.code = code ?? 500;
+    override toString(): string {
+        return this.map(u => u.name).join(', ')
     }
 }
+
+const users = new Users();
+users.push(new User('lalka'))
+users.push(new User('Shakalka'))
+console.log(users.toString())
