@@ -16,3 +16,18 @@ const users = new Users();
 users.push(new User('lalka'));
 users.push(new User('Shakalka'));
 console.log(users.toString());
+class UserList {
+    push(u) {
+        this.users.push(u);
+    }
+}
+class Payment {
+}
+class UserWithPayment extends Payment {
+}
+class UserWithPayment2 {
+    constructor(user, payment) {
+        this.user = user;
+        this.payment = payment;
+    }
+}
