@@ -1,33 +1,22 @@
 "use strict";
-class User {
-    constructor(name) {
-        this.name = name;
+class Vehicle {
+    constructor() {
+        this.damages = [];
+    }
+    set model(m) {
+        this._model = m;
+    }
+    get model() {
+        return this._model;
+    }
+    addDamage(damage) {
+        this.damages.push(damage);
+        console.log(this.damages);
     }
 }
-class Users extends Array {
-    searchByName(name) {
-        return this.filter(u => u.name === name);
-    }
-    toString() {
-        return this.map(u => u.name).join(', ');
-    }
-}
-const users = new Users();
-users.push(new User('lalka'));
-users.push(new User('Shakalka'));
-console.log(users.toString());
-class UserList {
-    push(u) {
-        this.users.push(u);
-    }
-}
-class Payment {
-}
-class UserWithPayment extends Payment {
-}
-class UserWithPayment2 {
-    constructor(user, payment) {
-        this.user = user;
-        this.payment = payment;
-    }
+new Vehicle().addDamage('222222');
+let b = new Vehicle();
+b.model = '1111111';
+if (b.model) {
+    console.log(b.model);
 }

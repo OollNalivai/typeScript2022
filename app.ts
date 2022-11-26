@@ -1,50 +1,28 @@
-class User {
-    name: string;
+class Vehicle {
+    public make: string;
+    private damages: string[] = [];
+    private _model: string;
 
-    constructor(name: string) {
-        this.name = name;
+    set model(m: string) {
+        this._model = m;
+    }
+
+    get model() {
+        return this._model;
+    }
+
+    addDamage(damage: string) {
+        this.damages.push(damage);
+
+        console.log(this.damages);
     }
 }
 
-class Users extends Array<User> {
-    searchByName(name: string) {
-        return this.filter(u => u.name === name);
-    }
-
-    override toString(): string {
-        return this.map(u => u.name).join(', ');
-    }
-}
-
-const users = new Users();
-users.push(new User('lalka'));
-users.push(new User('Shakalka'));
-console.log(users.toString());
-
-class UserList {
-    users: User[];
-
-    push(u: User) {
-        this.users.push(u);
-    }
+new Vehicle().addDamage('222222');
+let b = new Vehicle();
+b.model = '1111111';
+if (b.model) {
+    console.log(b.model);
 }
 
 
-class Payment {
-    time: string
-    date: Date;
-}
-
-class UserWithPayment extends Payment {
-    name: string;
-}
-
-class UserWithPayment2 {
-    user: User;
-    payment: Payment;
-
-    constructor(user: User, payment: Payment) {
-        this.user = user;
-        this.payment = payment;
-    }
-}
