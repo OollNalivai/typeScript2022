@@ -1,21 +1,28 @@
 class Product {
+    id: number;
+    title: string;
+    price: number;
+
     constructor(
         id: number,
         title: string,
         price: number
     ) {
+        this.id = id;
+        this.title = title;
+        this.price = price;
     }
 }
 
 class Delivery {
     date: Date;
-    address: string;
-    shopId: number;
+    address?: string;
+    shopId?: number;
 
-    constructor(date: Date, address: string);
-    constructor(date: Date, shopId: number);
-    constructor(date: Date, addressOrShopId?: string | number) {
-        this.date = date
+    constructor(address: string, date: Date);
+    constructor(shopId: number);
+    constructor(addressOrShopId: string | number, date: Date = new Date()) {
+        this.date = date;
         if (typeof addressOrShopId === 'string') {
             this.address = addressOrShopId;
         } else if (typeof addressOrShopId === 'number') {
@@ -24,10 +31,10 @@ class Delivery {
     }
 }
 
-const user1 = new Delivery(new Date(), 'asdasd');
-const user2 = new Delivery(new Date(),22);
+const user1 = new Delivery(222);
+const user2 = new Delivery('234234', new Date(),);
 
 class Cart {
-    products: any;
-    delivery: any;
+    products: Product[] = [];
+    delivery: Delivery;
 }
