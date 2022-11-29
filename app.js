@@ -23,4 +23,21 @@ class Cart {
     constructor() {
         this.products = [];
     }
+    addProduct(product) {
+        this.products.push(product);
+    }
+    deleteProductById(id) {
+        for (let i = 0; i < this.products.length; i++) {
+            if (this.products[i].id === id) {
+                // this.products.slice(id, 1)
+            }
+        }
+    }
 }
+const cart = new Cart();
+cart.addProduct(new Product(0, '21312', 23));
+cart.addProduct(new Product(1, '21312', 23));
+cart.addProduct(new Product(2, '21312', 23));
+cart.addProduct(new Product(3, '21312', 23));
+cart.deleteProductById(2);
+console.log(cart.products);

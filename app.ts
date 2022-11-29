@@ -37,4 +37,30 @@ const user2 = new Delivery('234234', new Date(),);
 class Cart {
     products: Product[] = [];
     delivery: Delivery;
+
+    addProduct(product: Product): void {
+        this.products.push(product);
+    }
+
+    deleteProductById(id: number): void {
+        for (let i = 0; i < this.products.length; i++ ) {
+            if (this.products[i].id === id) {
+                // this.products.slice(id, 1)
+            }
+        }
+
+    }
 }
+
+
+const cart = new Cart();
+cart.addProduct(new Product(0, '21312', 23))
+cart.addProduct(new Product(1, '21312', 23))
+cart.addProduct(new Product(2, '21312', 23))
+cart.addProduct(new Product(3, '21312', 23))
+cart.deleteProductById(2)
+console.log(cart.products);
+
+
+
+
