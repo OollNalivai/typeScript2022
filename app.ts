@@ -43,12 +43,8 @@ class Cart {
     }
 
     deleteProductById(id: number): void {
-        for (let i = 0; i < this.products.length; i++ ) {
-            if (this.products[i].id === id) {
-                // this.products.slice(id, 1)
-            }
-        }
-
+        this.products = this.products.filter(product => product.id !== id)
+        console.log(this.products)
     }
 }
 
