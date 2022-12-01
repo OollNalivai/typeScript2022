@@ -7,8 +7,8 @@ class Product {
     }
 }
 class Delivery {
-    constructor(addressOrShopId, date = new Date()) {
-        this.date = date;
+    constructor(addressOrShopId, dateDelivery = new Date()) {
+        this.dateDelivery = dateDelivery;
         if (typeof addressOrShopId === 'string') {
             this.address = addressOrShopId;
         }
@@ -17,8 +17,6 @@ class Delivery {
         }
     }
 }
-const user1 = new Delivery(222);
-const user2 = new Delivery('234234', new Date());
 class Cart {
     constructor() {
         this.products = [];
@@ -30,11 +28,30 @@ class Cart {
         this.products = this.products.filter(product => product.id !== id);
         console.log(this.products);
     }
+    getSum(products) {
+        return products.reduce((acc, cur) => acc + cur.price, 0);
+    }
+    setDelivery(delivery) {
+        this.delivery = delivery;
+    }
+    checkOut() {
+        if (this.products.length === 0) {
+            throw new Error('Нет продуктов, привезти пустой пакет?');
+        }
+        if (this.delivery === undefined) {
+            throw new Error('Нет данных по доставке, рил, куда везти?');
+        }
+        return console.log('Плати деньги, еда выезжает.');
+    }
 }
+// const user1 = new Delivery(222);
+// const user2 = new Delivery('234234', new Date());
 const cart = new Cart();
-cart.addProduct(new Product(0, '21312', 23));
-cart.addProduct(new Product(1, '21312', 23));
-cart.addProduct(new Product(2, '21312', 23));
-cart.addProduct(new Product(3, '21312', 23));
+cart.addProduct(new Product(0, '21312', 20));
+cart.addProduct(new Product(1, '21312', 20));
+cart.addProduct(new Product(2, '21312', 20));
+cart.addProduct(new Product(3, '21312', 20));
 cart.deleteProductById(2);
-console.log(cart.products);
+console.log(cart.getSum(cart.products));
+cart.setDelivery(new Delivery('234234', new Date()));
+cart.checkOut();
