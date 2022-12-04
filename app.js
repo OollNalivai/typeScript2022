@@ -1,21 +1,16 @@
 "use strict";
-class UserBuilder {
-    setName(name) {
-        this.name = name;
-        return this;
-    }
-    isAdmin() {
-        return this instanceof AdminBuilder;
+class Controller {
+    handleWithLogs(req) {
+        console.log('start');
+        this.handle(req);
+        console.log(`end`);
     }
 }
-class AdminBuilder extends UserBuilder {
+class UserController extends Controller {
+    handle(req) {
+        console.log(req);
+    }
 }
-const res = new UserBuilder().setName('Vasiok');
-const resAdmin = new AdminBuilder().setName('Vasiok');
-let user = new UserBuilder();
-if (user.isAdmin()) {
-    console.log(user);
-}
-else {
-    console.log(user);
-}
+// new Controller(); Error
+const c = new UserController();
+c.handleWithLogs(222);
