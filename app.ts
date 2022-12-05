@@ -1,20 +1,28 @@
-abstract class Controller {
-    abstract handle(req: any): void;
+//     Необходимо реализовать абстрактный класс Logger с 2-мя методами
+//     абстрактным - log(message): void
+//     printDate - выводящий в log дату
+//     К нему необходимо сделать реальный класс, который бы имел метод: logWithDate,
+//     выводящий сначала дату, а потом заданное сообщение
 
-    handleWithLogs(req: any) {
-        console.log('start');
-        this.handle(req)
-        console.log(`end`);
+abstract class Logger {
+    abstract log(message: string): void;
+
+    printDate(date: Date): void {
+        this.log(date.toString());
     }
 }
 
-class UserController extends Controller {
-    handle(req: any): void {
-        console.log(req);
+class MyLogger extends Logger {
+
+    log(message: string): void {
+        console.log('printDate message: ', message);
+    }
+
+    logWithDate(message: string): void {
+        this.printDate(new Date());
+        this.log(message);
     }
 }
 
-
-// new Controller(); Error
-const c = new UserController();
-c.handleWithLogs(222);
+const logger = new MyLogger()
+logger.logWithDate('time > on time')
