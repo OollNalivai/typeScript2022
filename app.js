@@ -19,6 +19,4 @@ class MyLogger extends Logger {
     }
 }
 const logger = new MyLogger();
-// logger.log('123123');
-// logger.printDate(new Date())
-logger.logWithDate('time>');
+logger.logWithDate('time > on time');
