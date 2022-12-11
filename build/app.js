@@ -1,6 +1,14 @@
 "use strict";
 function test(a) {
-    if (a > 0) {
-        return a;
+    return a;
+}
+class A {
+    test() {
+        return function () {
+        };
     }
+}
+try {
+}
+catch (e) {
 }

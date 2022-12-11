@@ -1,5 +1,28 @@
-function  test(a: number): number | undefined {
-    if(a > 0) {
+function  test(a: number): number {
         return a;
+}
+
+
+type StrOrNumFunc = (a: number | string) => number;
+// let f: StrOrNumFunc = test;
+// f('asdasd')
+
+// test(undefined, [1, 3])
+
+
+class A {
+    b: number
+
+    test( ) {
+        return function () {
+            // this.b = 5
+        }
     }
+}
+
+
+try {
+
+} catch (e) {
+    // console.log(e.message)
 }
