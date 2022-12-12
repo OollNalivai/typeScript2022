@@ -1,28 +1,20 @@
-function  test(a: number): number {
-        return a;
-}
+class User {
+    role?: 'admin' | 'user' | undefined;
+    static role: 'admin' | 'user' | undefined;
 
-
-type StrOrNumFunc = (a: number | string) => number;
-// let f: StrOrNumFunc = test;
-// f('asdasd')
-
-// test(undefined, [1, 3])
-
-
-class A {
-    b: number
-
-    test( ) {
-        return function () {
-            // this.b = 5
-        }
+    constructor(private name: string) {
     }
 }
 
+function createUser(name: User) {
+    //logic
+    const defaultUser = new User('asdassda');
+    defaultUser.role = undefined;
 
-try {
-
-} catch (e) {
-    // console.log(e.message)
+  switch (User.role) {
+      case 'admin':
+          return;
+      case 'user':
+          return true;
+  }
 }

@@ -1,14 +1,16 @@
 "use strict";
-function test(a) {
-    return a;
-}
-class A {
-    test() {
-        return function () {
-        };
+class User {
+    constructor(name) {
+        this.name = name;
     }
 }
-try {
-}
-catch (e) {
+function createUser(name) {
+    const defaultUser = new User('asdassda');
+    defaultUser.role = undefined;
+    switch (User.role) {
+        case 'admin':
+            return;
+        case 'user':
+            return true;
+    }
 }
