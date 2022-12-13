@@ -1,20 +1,12 @@
-class User {
-    role?: 'admin' | 'user' | undefined;
-    static role: 'admin' | 'user' | undefined;
+const a: Array<number> = [1, 2, 3];
 
-    constructor(private name: string) {
-    }
+async function test() {
+    const a = await new Promise<number>((resolve, reject) => {
+        resolve(1);
+    });
 }
 
-function createUser(name: User) {
-    //logic
-    const defaultUser = new User('asdassda');
-    defaultUser.role = undefined;
-
-  switch (User.role) {
-      case 'admin':
-          return;
-      case 'user':
-          return true;
-  }
+const check: Record<string, boolean> = {
+    drive: true,
+    kpp: false
 }
