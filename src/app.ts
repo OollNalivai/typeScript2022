@@ -1,26 +1,35 @@
-function toString<T>(data: T): string | undefined {
-    if (Array.isArray(data)) {
-        return data.toString();
-    }
-
-    switch (typeof data) {
-        case 'string':
-            return data;
-        case 'number':
-        case 'boolean':
-        case 'symbol':
-        case 'function':
-        case 'bigint':
-            return data.toString();
-        case 'object':
-            return JSON.stringify(data)
-    }
-    return undefined
+function logMiddleware<T>(data: T): T {
+    console.log(data);
+    return data;
 }
 
-console.log(toString(123132));
-console.log(toString('123132'));
-console.log(toString(false));
-console.log(toString(function a() {}));
-console.log(toString({'13': 23, 444: 'asdasd', a: {'a': '3231'}}));
-console.log(toString(['23', '2334212']));
+const res = logMiddleware<number>(10);
+
+
+function getSplitedHalf<T>(data: Array<T>): Array<T> {
+    const l = data.length / 2;
+    return data.splice(0, l)
+}
+
+getSplitedHalf([1, 2, 4])
+getSplitedHalf<string>(['2', '3', '4'])
+
+
+const split: <T>(data: Array<T>) => Array<T> = getSplitedHalf;
+
+interface LogLineInterface<T> {
+    timeStamp: Date,
+    data: T
+}
+
+type LogLineType<T> = {
+    timeStamp: Date,
+    data: T
+}
+
+const logLin: LogLineInterface<{ a: number }> = {
+    timeStamp: new Date(),
+    data: {
+        a: 1
+    }
+}

@@ -1,25 +1,19 @@
 "use strict";
-function toString(data) {
-    if (Array.isArray(data)) {
-        return data.toString();
-    }
-    switch (typeof data) {
-        case 'string':
-            return data;
-        case 'number':
-        case 'boolean':
-        case 'symbol':
-        case 'function':
-        case 'bigint':
-            return data.toString();
-        case 'object':
-            return JSON.stringify(data);
-    }
-    return undefined;
+function logMiddleware(data) {
+    console.log(data);
+    return data;
 }
-console.log(toString(123132));
-console.log(toString('123132'));
-console.log(toString(false));
-console.log(toString(function a() { }));
-console.log(toString({ '13': 23, 444: 'asdasd', a: { 'a': '3231' } }));
-console.log(toString(['23', '2334212']));
+const res = logMiddleware(10);
+function getSplitedHalf(data) {
+    const l = data.length / 2;
+    return data.splice(0, l);
+}
+getSplitedHalf([1, 2, 4]);
+getSplitedHalf(['2', '3', '4']);
+const split = getSplitedHalf;
+const logLin = {
+    timeStamp: new Date(),
+    data: {
+        a: 1
+    }
+};
