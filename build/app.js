@@ -1,19 +1,17 @@
 "use strict";
-function logMiddleware(data) {
-    console.log(data);
-    return data;
+class Vehicle {
 }
-const res = logMiddleware(10);
-function getSplitedHalf(data) {
-    const l = data.length / 2;
-    return data.splice(0, l);
+function kmToMiles(vehicle) {
+    vehicle.run = vehicle.run / 0.62;
+    return vehicle;
 }
-getSplitedHalf([1, 2, 4]);
-getSplitedHalf(['2', '3', '4']);
-const split = getSplitedHalf;
-const logLin = {
-    timeStamp: new Date(),
-    data: {
-        a: 1
-    }
-};
+class LCV extends Vehicle {
+}
+const vehicle = kmToMiles(new Vehicle());
+const lcv = kmToMiles(new LCV());
+kmToMiles({ run: 1 });
+function logId(id, additionalData) {
+    console.log(id);
+    console.log(additionalData);
+    return { id, data: additionalData };
+}
