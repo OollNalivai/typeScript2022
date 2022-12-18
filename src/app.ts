@@ -1,23 +1,36 @@
-class Vehicle { // аналогично с интерфесами и типами вместо сласса
-    run: number;
+// Необходимо написать функцию сортировки любых
+// объектов, которые имеют id по убыванию и по возрастанию
+
+
+const data = [
+    {id: 2, name: 'Петя'},
+    {id: 1, name: 'Вася'},
+    {id: 3, name: 'Надя'},
+];
+
+interface inputIdObj {
+    id: number;
 }
 
-function kmToMiles<T extends Vehicle>(vehicle: T): T {
-    vehicle.run = vehicle.run / 0.62;
-    return vehicle;
+type directionType = {
+    direction: 'increase' | 'decrease'
 }
 
-class LCV extends Vehicle { // аналогично с интерфесами и типами вместо сласса
-    capacity: number;
+function sortDataFun<T extends inputIdObj>(
+    data: T[],
+    directionType: directionType = {direction: 'increase'}): T[] {
+    data.sort((a, b) => a.id - b.id);
+    if (directionType.direction == 'increase') {
+        console.log(data);
+        return data;
+    } else {
+        data = data.reverse();
+        console.log(data);
+        return data;
+    }
+
 }
 
-const vehicle = kmToMiles(new Vehicle());
-const lcv = kmToMiles(new LCV());
-kmToMiles({run: 1});
-
-
-function logId<T extends string | number, Y>(id: T, additionalData: Y): { id: T, data: Y } {
-    console.log(id);
-    console.log(additionalData);
-    return { id, data: additionalData } ;
-}
+sortDataFun(data);
+sortDataFun(data, {direction: 'increase'});
+sortDataFun(data, {direction: 'decrease'});
