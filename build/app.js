@@ -5,17 +5,13 @@ const data = [
     { id: 3, name: 'Надя' },
 ];
 function sortDataFun(data, directionType = { direction: 'increase' }) {
-    data.sort((a, b) => a.id - b.id);
-    if (directionType.direction == 'increase') {
-        console.log(data);
-        return data;
-    }
-    else {
-        data = data.reverse();
-        console.log(data);
-        return data;
+    switch (directionType.direction) {
+        case 'increase':
+            return data.sort((a, b) => a.id - b.id);
+        case 'decrease':
+            return data.sort((a, b) => b.id - a.id);
     }
 }
-sortDataFun(data);
-sortDataFun(data, { direction: 'increase' });
-sortDataFun(data, { direction: 'decrease' });
+console.log(sortDataFun(data));
+console.log(sortDataFun(data, { direction: 'increase' }));
+console.log(sortDataFun(data, { direction: 'decrease' }));
