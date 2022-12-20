@@ -1,31 +1,28 @@
-// Необходимо написать функцию сортировки любых
-// объектов, которые имеют id по убыванию и по возрастанию
+class Resp<D, E> {
+    // data?: D;
+    // error?: E;
 
-const data = [
-    {id: 2, name: 'Петя'},
-    {id: 1, name: 'Вася'},
-    {id: 3, name: 'Надя'},
-];
-
-interface inputIdObj {
-    id: number;
-}
-
-type directionType = {
-    direction: 'increase' | 'decrease'
-}
-
-function sortDataFun<T extends inputIdObj>(
-    data: T[],
-    directionType: directionType = {direction: 'increase'}): T[] {
-    switch (directionType.direction) {
-        case 'increase':
-            return data.sort((a, b) => a.id - b.id);
-        case 'decrease':
-            return data.sort((a, b) => b.id - a.id);
+    constructor(public data?: D,public error?: E) {
+        // if (data) {
+        //     this.data = data;
+        // }
+        // if (error) {
+        //     this.error = error;
+        // }
     }
 }
 
-console.log(sortDataFun(data));
-console.log(sortDataFun(data, {direction: 'increase'}));
-console.log(sortDataFun(data, {direction: 'decrease'}));
+const res = new Resp<string, number>('data', 0);
+console.log(res);
+
+class HTTPResp<F> extends Resp<string, number> {
+    code: F;
+
+    setCode(code: F) {
+        this.code = code;
+
+    }
+}
+
+const res2 = new HTTPResp('2312', 111);
+console.log(res2.error);

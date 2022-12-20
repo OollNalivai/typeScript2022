@@ -1,17 +1,16 @@
 "use strict";
-const data = [
-    { id: 2, name: 'Петя' },
-    { id: 1, name: 'Вася' },
-    { id: 3, name: 'Надя' },
-];
-function sortDataFun(data, directionType = { direction: 'increase' }) {
-    switch (directionType.direction) {
-        case 'increase':
-            return data.sort((a, b) => a.id - b.id);
-        case 'decrease':
-            return data.sort((a, b) => b.id - a.id);
+class Resp {
+    constructor(data, error) {
+        this.data = data;
+        this.error = error;
     }
 }
-console.log(sortDataFun(data));
-console.log(sortDataFun(data, { direction: 'increase' }));
-console.log(sortDataFun(data, { direction: 'decrease' }));
+const res = new Resp('data', 0);
+console.log(res);
+class HTTPResp extends Resp {
+    setCode(code) {
+        this.code = code;
+    }
+}
+const res2 = new HTTPResp('2312', 111);
+console.log(res2.error);
