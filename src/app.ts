@@ -1,28 +1,30 @@
-class Resp<D, E> {
-    // data?: D;
-    // error?: E;
+type Constructor = new (...args: any[]) => {}
+type GConstructor<T = {}> = new (...args: any[]) => T
 
-    constructor(public data?: D,public error?: E) {
-        // if (data) {
-        //     this.data = data;
-        // }
-        // if (error) {
-        //     this.error = error;
-        // }
+class List {
+    constructor(public items: string[]) {
+    }
+
+}
+
+type ListType = GConstructor<List>
+
+class ExtendedListClass extends List {
+    first() {
+        let [result] = this.items;
+        return result;
     }
 }
 
-const res = new Resp<string, number>('data', 0);
-console.log(res);
-
-class HTTPResp<F> extends Resp<string, number> {
-    code: F;
-
-    setCode(code: F) {
-        this.code = code;
-
-    }
+function ExtendedList<TBase extends ListType>(Base: TBase) {
+    return class ExtendedList extends Base {
+        first() {
+            let [result] = this.items;
+            return result;
+        }
+    };
 }
 
-const res2 = new HTTPResp('2312', 111);
-console.log(res2.error);
+const list = ExtendedList(List);
+const res = new list(['first', 'second'])
+console.log(res.first());
