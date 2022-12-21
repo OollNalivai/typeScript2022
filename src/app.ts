@@ -4,10 +4,21 @@ type GConstructor<T = {}> = new (...args: any[]) => T
 class List {
     constructor(public items: string[]) {
     }
+}
 
+class Accordion {
+    isOpened: boolean;
+}
+
+class AccordionList {
+    isOpened: boolean;
+
+    constructor(public items: string[]) {
+    }
 }
 
 type ListType = GConstructor<List>
+type AccordionType = GConstructor<Accordion>
 
 class ExtendedListClass extends List {
     first() {
@@ -16,7 +27,7 @@ class ExtendedListClass extends List {
     }
 }
 
-function ExtendedList<TBase extends ListType>(Base: TBase) {
+function ExtendedList<TBase extends ListType & AccordionType>(Base: TBase) {
     return class ExtendedList extends Base {
         first() {
             let [result] = this.items;
@@ -25,6 +36,6 @@ function ExtendedList<TBase extends ListType>(Base: TBase) {
     };
 }
 
-const list = ExtendedList(List);
-const res = new list(['first', 'second'])
+const list = ExtendedList(AccordionList);
+const res = new list(['first', 'second']);
 console.log(res.first());

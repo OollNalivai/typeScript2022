@@ -4,6 +4,13 @@ class List {
         this.items = items;
     }
 }
+class Accordion {
+}
+class AccordionList {
+    constructor(items) {
+        this.items = items;
+    }
+}
 class ExtendedListClass extends List {
     first() {
         let [result] = this.items;
@@ -18,6 +25,6 @@ function ExtendedList(Base) {
         }
     };
 }
-const list = ExtendedList(List);
+const list = ExtendedList(AccordionList);
 const res = new list(['first', 'second']);
 console.log(res.first());
