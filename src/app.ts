@@ -1,41 +1,19 @@
-type Constructor = new (...args: any[]) => {}
-type GConstructor<T = {}> = new (...args: any[]) => T
-
-class List {
-    constructor(public items: string[]) {
-    }
+interface UserInterface {
+    name: string;
+    age: number;
 }
 
-class Accordion {
-    isOpened: boolean;
+type KeyOfUser = keyof UserInterface;
+
+const key: KeyOfUser = 'name';
+
+function getValue<T, K extends keyof T>(obj: T, key: K) {
+    return obj[key];
 }
 
-class AccordionList {
-    isOpened: boolean;
+const user: UserInterface = {
+    name: 'Koko',
+    age: 2
+};
 
-    constructor(public items: string[]) {
-    }
-}
-
-type ListType = GConstructor<List>
-type AccordionType = GConstructor<Accordion>
-
-class ExtendedListClass extends List {
-    first() {
-        let [result] = this.items;
-        return result;
-    }
-}
-
-function ExtendedList<TBase extends ListType & AccordionType>(Base: TBase) {
-    return class ExtendedList extends Base {
-        first() {
-            let [result] = this.items;
-            return result;
-        }
-    };
-}
-
-const list = ExtendedList(AccordionList);
-const res = new list(['first', 'second']);
-console.log(res.first());
+const userName = getValue(user, 'name');
