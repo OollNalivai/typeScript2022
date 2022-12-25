@@ -1,19 +1,40 @@
-interface UserInterface {
+// Необходимо написать функцию группировки,
+// которая принимает массив объектов
+// и его ключ, производит группировку по указанному ключу и возращает
+// сгруппированный объект.
+// [
+// 	{ group: 1, name: 'a' },
+// 	{ group: 1, name: 'b' },
+// 	{ group: 2, name: 'c' },
+// ];
+// При группироке по 'group' ---->
+// {
+// 	'1': [ { group: 1, name: 'a' }, { group: 1, name: 'b' } ],
+// 	'2': [ { group: 2, name: 'c' } ]
+// }
+
+function group<T extends Record<string, any>>(array: T[], key: keyof T ): GroupInterface<T> {
+    // return array.reverse<GroupInterface<T>>((map: GroupInterface<T>, item) => {
+    //     const itemKey = item[key];
+    //     if() {
+    //
+    //     }
+    // })
+}
+
+interface Data {
+    group: number;
     name: string;
-    age: number;
 }
 
-type KeyOfUser = keyof UserInterface;
-
-const key: KeyOfUser = 'name';
-
-function getValue<T, K extends keyof T>(obj: T, key: K) {
-    return obj[key];
+interface GroupInterface<T> {
+    [key: string]: T
 }
 
-const user: UserInterface = {
-    name: 'Koko',
-    age: 2
-};
+type key = string | number | symbol;
 
-const userName = getValue(user, 'name');
+const data: Data[] = [
+    {group: 1, name: 'a'},
+    {group: 1, name: 'b'},
+    {group: 2, name: 'c'}
+];
