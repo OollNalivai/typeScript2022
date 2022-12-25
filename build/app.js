@@ -1,10 +1,22 @@
 "use strict";
-const key = 'name';
-function getValue(obj, key) {
-    return obj[key];
+function group(array, key) {
+    return array.reduce((map, item) => {
+        const itemKey = item[key];
+        let curEl = map[itemKey];
+        if (Array.isArray(curEl)) {
+            curEl.push(item);
+        }
+        else {
+            curEl = [item];
+        }
+        map[itemKey] = curEl;
+        return map;
+    }, {});
 }
-const user = {
-    name: 'Koko',
-    age: 2
-};
-const userName = getValue(user, 'name');
+const data = [
+    { group: 1, name: 'a' },
+    { group: 1, name: 'b' },
+    { group: 2, name: 'c' }
+];
+const res = group(data, 'name');
+console.log(res);
