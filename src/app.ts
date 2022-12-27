@@ -1,33 +1,31 @@
-interface GroupInterface<T> {
-    [key: string]: T[];
+let strOrNum: string | number;
+
+if (Math.random() > 0.5) {
+    strOrNum = 5;
+} else {
+    strOrNum = 'str';
 }
 
-type key = string | number | symbol;
-
-function group<T extends Record<key, any>>(array: T[], key: keyof T): GroupInterface<T> {
-    return array.reduce<GroupInterface<T>>((map: GroupInterface<T>, item) => {
-        const itemKey = item[key];
-        let curEl = map[itemKey];
-        if (Array.isArray(curEl)) {
-            curEl.push(item);
-        } else {
-            curEl = [item];
-        }
-        map[itemKey] = curEl;
-        return map;
-    }, {});
+if (typeof strOrNum === 'string') {
+    console.log(strOrNum);
+} else {
+    console.log(strOrNum);
 }
 
-interface Data {
-    group: number;
-    name: string;
+
+let str2OrNum: typeof strOrNum;
+
+const user = {
+    name: 'Dfcz'
+};
+
+type keyOfUser = keyof typeof user;
+
+enum Direction {
+    up,
+    doun
 }
 
-const data: Data[] = [
-    {group: 1, name: 'a'},
-    {group: 1, name: 'b'},
-    {group: 2, name: 'c'}
-];
+type d = keyof typeof Direction;
 
-const res = group<Data>(data, 'name')
-console.log(res)
+

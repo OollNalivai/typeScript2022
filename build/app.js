@@ -1,22 +1,23 @@
 "use strict";
-function group(array, key) {
-    return array.reduce((map, item) => {
-        const itemKey = item[key];
-        let curEl = map[itemKey];
-        if (Array.isArray(curEl)) {
-            curEl.push(item);
-        }
-        else {
-            curEl = [item];
-        }
-        map[itemKey] = curEl;
-        return map;
-    }, {});
+let strOrNum;
+if (Math.random() > 0.5) {
+    strOrNum = 5;
 }
-const data = [
-    { group: 1, name: 'a' },
-    { group: 1, name: 'b' },
-    { group: 2, name: 'c' }
-];
-const res = group(data, 'name');
-console.log(res);
+else {
+    strOrNum = 'str';
+}
+if (typeof strOrNum === 'string') {
+    console.log(strOrNum);
+}
+else {
+    console.log(strOrNum);
+}
+let str2OrNum;
+const user = {
+    name: 'Dfcz'
+};
+var Direction;
+(function (Direction) {
+    Direction[Direction["up"] = 0] = "up";
+    Direction[Direction["doun"] = 1] = "doun";
+})(Direction || (Direction = {}));
