@@ -1,31 +1,22 @@
-let strOrNum: string | number;
-
-if (Math.random() > 0.5) {
-    strOrNum = 5;
-} else {
-    strOrNum = 'str';
+interface Role {
+    name: string
 }
 
-if (typeof strOrNum === 'string') {
-    console.log(strOrNum);
-} else {
-    console.log(strOrNum);
+interface User {
+    name: string;
+    roles: Role[]
 }
 
-
-let str2OrNum: typeof strOrNum;
-
-const user = {
-    name: 'Dfcz'
-};
-
-type keyOfUser = keyof typeof user;
-
-enum Direction {
-    up,
-    doun
+const user: User = {
+    name: 'Pol',
+    roles: []
 }
 
-type d = keyof typeof Direction;
+const nameUser = user['name']
+let roleNames: 'roles' = 'roles'
+// const roleNames = 'roles';
+
+type rolesType = User['roles']
+type rolesType2 = User[typeof roleNames]
 
 
