@@ -1,11 +1,2 @@
 "use strict";
-const user = {
-    name: 'Pol',
-    roles: [],
-    permission: {
-        endDate: new Date()
-    }
-};
-const nameUser = user['name'];
-let roleNames = 'roles';
-const roles = ['admin', 'user', 'super-user'];
+const a1 = Math.random() > 0.5 ? 1 : 0;

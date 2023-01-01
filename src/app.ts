@@ -1,34 +1,11 @@
-interface Role {
-    name: string;
+const a1: number = Math.random() > 0.5 ? 1 : 0;
+
+interface HTTPPResponse<T extends 'success' | 'failed'> {
+    code: number;
+    data: T extends 'success' ? string : Error;
+    data2: T extends 'success' ? string : number;
+
+    // additionalData: string | number;
 }
 
-interface Permission {
-    endDate: Date;
-}
 
-interface User {
-    name: string;
-    roles: Role[];
-    permission: Permission;
-}
-
-const user: User = {
-    name: 'Pol',
-    roles: [],
-    permission: {
-        endDate: new Date()
-    }
-};
-
-const nameUser = user['name'];
-let roleNames: 'roles' = 'roles';
-// const roleNames = 'roles';
-
-type rolesType = User['roles']
-type rolesType2 = User[typeof roleNames]
-
-type roleType = User['roles'][number];
-type dateType = User['permission']['endDate'];
-
-const roles = ['admin', 'user', 'super-user'] as const;
-type roleType2 = typeof roles[number]
