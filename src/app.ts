@@ -7,8 +7,14 @@ type USerRoles = {
 }
 
 type ModifierToAccess<Type> = {
-    [Property in keyof Type]: boolean;
+    +readonly [Property in keyof Type
+        as Exclude<
+        `canAccess${string & Property}`, 'canAccessadminPanel'>]-?: boolean;
+    // + - модификаторы для свойств
+    // уюрали ненужный тип canAccessadminPanel
 }
+
+type UserAccess2 = ModifierToAccess<USerRoles>
 
 type UserAccess1 = {
     customers?: boolean,
