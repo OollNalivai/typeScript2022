@@ -1,22 +1,19 @@
-type Modifier = 'read' | 'update' | 'create';
+type ReadOrWrite = 'read' | 'write';
+type Bulk = 'bulk' | ''
 
-type USerRoles = {
-    customers?: Modifier,
-    projects?: Modifier,
-    adminPanel?: Modifier
+type Access = `can${Capitalize<ReadOrWrite>}${Capitalize<Bulk>}`;
+
+type ReadOrWriteBulk<T> = T extends `can${infer R}` ? R : never;
+
+type T = ReadOrWriteBulk<Access>;
+
+type ErrorOrSuccess = 'error' | 'success';
+
+type ResponseT = {
+    result: `http${Capitalize<ErrorOrSuccess>}`
 }
 
-type ModifierToAccess<Type> = {
-    +readonly [Property in keyof Type
-        as `canAccess${string & Property}`]-?: boolean;
-    // + - модификаторы для свойств
-    // уюрали ненужный тип canAccessAdminPanel
-}
+const a2: ResponseT = {
+    result: 'httpSuccess'
+};
 
-type UserAccess2 = ModifierToAccess<USerRoles>
-
-type UserAccess1 = {
-    customers?: boolean,
-    projects?: boolean,
-    adminPanel?: boolean
-}
