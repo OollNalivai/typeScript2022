@@ -1,19 +1,27 @@
-type ReadOrWrite = 'read' | 'write';
-type Bulk = 'bulk' | ''
+/* Сделать тип для результата валидации формы */
 
-type Access = `can${Capitalize<ReadOrWrite>}${Capitalize<Bulk>}`;
-
-type ReadOrWriteBulk<T> = T extends `can${infer R}` ? R : never;
-
-type T = ReadOrWriteBulk<Access>;
-
-type ErrorOrSuccess = 'error' | 'success';
-
-type ResponseT = {
-    result: `http${Capitalize<ErrorOrSuccess>}`
+interface FormType {
+    name: string;
+    password: string;
 }
 
-const a2: ResponseT = {
-    result: 'httpSuccess'
+type formMappedType<T> = {
+    [Property in keyof T]: {
+    isValid: true;
+} | {
+    isValid: false;
+    errorMessage: string;
+}
+}
+
+type formValidationType = formMappedType<FormType>
+
+const form: FormType = {
+    name: 'Losha',
+    password: '1234'
 };
 
+const formValidation: formValidationType = {
+    name: {isValid: true},
+    password: {isValid: false, errorMessage: 'Должен быть длиннее 5 симоволов'}
+};
