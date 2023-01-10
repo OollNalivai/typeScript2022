@@ -1,27 +1,20 @@
-/* Сделать тип для результата валидации формы */
-
-interface FormType {
+interface User {
     name: string;
-    password: string;
+    age?: number;
+    email: string;
 }
 
-type formMappedType<T> = {
-    [Property in keyof T]: {
-    isValid: true;
-} | {
-    isValid: false;
-    errorMessage: string;
+type partial = Partial<User>;
+const p: partial = {};
+
+type required = Required<User>
+type readonly = Readonly<User>
+type readonlyAndReadonly = Required<Readonly<User>>
+
+const b: readonlyAndReadonly = {
+    name: '',
+    age: 3214,
+    email: ''
 }
-}
 
-type formValidationType = formMappedType<FormType>
-
-const form: FormType = {
-    name: 'Losha',
-    password: '1234'
-};
-
-const formValidation: formValidationType = {
-    name: {isValid: true},
-    password: {isValid: false, errorMessage: 'Должен быть длиннее 5 симоволов'}
-};
+// b.name = 'asdasd';

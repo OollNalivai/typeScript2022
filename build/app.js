@@ -1,9 +1,7 @@
 "use strict";
-const form = {
-    name: 'Losha',
-    password: '1234'
-};
-const formValidation = {
-    name: { isValid: true },
-    password: { isValid: false, errorMessage: 'Должен быть длиннее 5 симоволов' }
+const p = {};
+const b = {
+    name: '',
+    age: 3214,
+    email: ''
 };
