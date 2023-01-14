@@ -5,6 +5,3 @@ class User {
         this.name = name;
     }
 }
-function getData(id) {
-    return new User(id, 'Loshapio');
-}
