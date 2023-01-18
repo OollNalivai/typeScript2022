@@ -6,18 +6,21 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 let UserService = class UserService {
-    constructor() {
-        this.users = 1000;
-    }
     getUserInDatabase() {
         return this.users;
     }
 };
 UserService = __decorate([
-    threeUserAdvanced
+    setUsers(2),
+    setUserAdvanced(4)
 ], UserService);
 function nullUser(target) {
     target.prototype.users = 0;
+}
+function setUsers(users) {
+    return (target) => {
+        target.prototype.users = users;
+    };
 }
 function threeUserAdvanced(constructor) {
     return class extends constructor {
@@ -25,6 +28,16 @@ function threeUserAdvanced(constructor) {
             super(...arguments);
             this.users = 3;
         }
+    };
+}
+function setUserAdvanced(users) {
+    return (constructor) => {
+        return class extends constructor {
+            constructor() {
+                super(...arguments);
+                this.users = users;
+            }
+        };
     };
 }
 console.log(new UserService().getUserInDatabase());
