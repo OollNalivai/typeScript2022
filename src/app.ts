@@ -5,11 +5,11 @@ interface UserServiceInterface {
 }
 
 @setUsers(2)
-@setUserAdvanced(4)
+@log()
+// @setUserAdvanced(4)
 // @threeUserAdvanced
 class UserService implements UserServiceInterface {
-    users: number
-    ;
+    users: number = 1000;
 
     getUserInDatabase(): number {
         return this.users;
@@ -21,8 +21,17 @@ function nullUser(target: Function) {
 }
 
 function setUsers(users: number) {
+    console.log('setUsers init');
     return (target: Function) => {
+        console.log('setUsers run');
         target.prototype.users = users;
+    };
+}
+
+function log() {
+    console.log('log init');
+    return (target: Function) => {
+        console.log('log run')
     };
 }
 
