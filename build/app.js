@@ -14,41 +14,17 @@ let UserService = class UserService {
     }
 };
 UserService = __decorate([
-    setUsers(2),
-    log()
+    CreatedAt()
 ], UserService);
-function nullUser(target) {
-    target.prototype.users = 0;
-}
-function setUsers(users) {
-    console.log('setUsers init');
-    return (target) => {
-        console.log('setUsers run');
-        target.prototype.users = users;
-    };
-}
-function log() {
-    console.log('log init');
-    return (target) => {
-        console.log('log run');
-    };
-}
-function threeUserAdvanced(constructor) {
-    return class extends constructor {
-        constructor() {
-            super(...arguments);
-            this.users = 3;
-        }
-    };
-}
-function setUserAdvanced(users) {
+function CreatedAt() {
     return (constructor) => {
         return class extends constructor {
             constructor() {
                 super(...arguments);
-                this.users = users;
+                this.createdAt = new Date().toString();
             }
         };
     };
 }
-console.log(new UserService().getUserInDatabase());
+console.log(new UserService());
+console.log(new UserService().createdAt);

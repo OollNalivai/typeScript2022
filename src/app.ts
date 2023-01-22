@@ -4,10 +4,7 @@ interface UserServiceInterface {
     getUserInDatabase(): number;
 }
 
-@setUsers(2)
-@log()
-// @setUserAdvanced(4)
-// @threeUserAdvanced
+@CreatedAt()
 class UserService implements UserServiceInterface {
     users: number = 1000;
 
@@ -16,39 +13,19 @@ class UserService implements UserServiceInterface {
     }
 }
 
-function nullUser(target: Function) {
-    target.prototype.users = 0;
-}
-
-function setUsers(users: number) {
-    console.log('setUsers init');
-    return (target: Function) => {
-        console.log('setUsers run');
-        target.prototype.users = users;
-    };
-}
-
-function log() {
-    console.log('log init');
-    return (target: Function) => {
-        console.log('log run')
-    };
-}
-
-function threeUserAdvanced<T extends { new(...args: any[]): {} }>(constructor: T) {
-    return class extends constructor {
-        users = 3;
-    };
-}
-
-function setUserAdvanced(users: number) {
+function CreatedAt() {
     return <T extends { new(...args: any[]): {} }>(constructor: T) => {
         return class extends constructor {
-            users = users;
+            createdAt = new Date().toString();
         };
     };
 }
 
-console.log(new UserService().getUserInDatabase());
+type CreatedAt = {
+    createdAt: Date;
+}
 
+
+console.log(new UserService());
+console.log((new UserService() as UserServiceInterface & CreatedAt).createdAt);
 
