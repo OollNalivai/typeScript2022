@@ -4,28 +4,31 @@ interface UserServiceInterface {
     getUserInDatabase(): number;
 }
 
-@CreatedAt()
 class UserService implements UserServiceInterface {
     users: number = 1000;
 
+    @Log
     getUserInDatabase(): number {
-        return this.users;
+        throw new Error('ERROR');
     }
 }
 
-function CreatedAt() {
-    return <T extends { new(...args: any[]): {} }>(constructor: T) => {
-        return class extends constructor {
-            createdAt = new Date().toString();
-        };
-    };
+function Log(
+    target: Object,
+    propertyKey: string | symbol,
+    descriptor: TypedPropertyDescriptor<(...args: any[]) => any>
+): TypedPropertyDescriptor<(...args: any[]) => any> | void {
+    console.log(target);
+    console.log(propertyKey);
+    console.log(descriptor);
+    descriptor.value = () => {
+        console.log('NO ERROR');
+    }
+    // return {
+    //     enumerable: true
+    // }
 }
 
-type CreatedAt = {
-    createdAt: Date;
-}
+console.log(new UserService().getUserInDatabase());
 
-
-console.log(new UserService());
-console.log((new UserService() as UserServiceInterface & CreatedAt).createdAt);
 

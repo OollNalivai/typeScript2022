@@ -5,26 +5,23 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-let UserService = class UserService {
+class UserService {
     constructor() {
         this.users = 1000;
     }
     getUserInDatabase() {
-        return this.users;
+        throw new Error('ERROR');
     }
-};
-UserService = __decorate([
-    CreatedAt()
-], UserService);
-function CreatedAt() {
-    return (constructor) => {
-        return class extends constructor {
-            constructor() {
-                super(...arguments);
-                this.createdAt = new Date().toString();
-            }
-        };
+}
+__decorate([
+    Log
+], UserService.prototype, "getUserInDatabase", null);
+function Log(target, propertyKey, descriptor) {
+    console.log(target);
+    console.log(propertyKey);
+    console.log(descriptor);
+    descriptor.value = () => {
+        console.log('NO ERROR');
     };
 }
-console.log(new UserService());
-console.log(new UserService().createdAt);
+console.log(new UserService().getUserInDatabase());
