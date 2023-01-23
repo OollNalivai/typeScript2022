@@ -7,26 +7,25 @@ interface UserServiceInterface {
 class UserService implements UserServiceInterface {
     users: number = 1000;
 
-    @Log
+    @Log()
     getUserInDatabase(): number {
         throw new Error('ERROR');
     }
 }
 
-function Log(
-    target: Object,
-    propertyKey: string | symbol,
-    descriptor: TypedPropertyDescriptor<(...args: any[]) => any>
-): TypedPropertyDescriptor<(...args: any[]) => any> | void {
-    console.log(target);
-    console.log(propertyKey);
-    console.log(descriptor);
-    descriptor.value = () => {
-        console.log('NO ERROR');
-    }
-    // return {
-    //     enumerable: true
-    // }
+function Log() {
+    return (
+        target: Object,
+        propertyKey: string | symbol,
+        descriptor: TypedPropertyDescriptor<(...args: any[]) => any>
+    ): TypedPropertyDescriptor<(...args: any[]) => any> | void => {
+        console.log(target);
+        console.log(propertyKey);
+        console.log(descriptor);
+        descriptor.value = () => {
+            console.log('NO ERROR');
+        };
+    };
 }
 
 console.log(new UserService().getUserInDatabase());

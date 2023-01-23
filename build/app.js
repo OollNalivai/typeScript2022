@@ -14,14 +14,16 @@ class UserService {
     }
 }
 __decorate([
-    Log
+    Log()
 ], UserService.prototype, "getUserInDatabase", null);
-function Log(target, propertyKey, descriptor) {
-    console.log(target);
-    console.log(propertyKey);
-    console.log(descriptor);
-    descriptor.value = () => {
-        console.log('NO ERROR');
+function Log() {
+    return (target, propertyKey, descriptor) => {
+        console.log(target);
+        console.log(propertyKey);
+        console.log(descriptor);
+        descriptor.value = () => {
+            console.log('NO ERROR');
+        };
     };
 }
 console.log(new UserService().getUserInDatabase());
