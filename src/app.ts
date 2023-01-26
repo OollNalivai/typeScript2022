@@ -7,23 +7,30 @@ interface UserServiceInterface {
 class UserService implements UserServiceInterface {
     users: number = 1000;
 
-    @Log()
+    @Catch({rethrow: true})
     getUserInDatabase(): number {
         throw new Error('ERROR');
     }
 }
 
-function Log() {
+function Catch({rethrow}: { rethrow: boolean } = {rethrow: false}) {
     return (
         target: Object,
-        propertyKey: string | symbol,
+        _: string | symbol,
         descriptor: TypedPropertyDescriptor<(...args: any[]) => any>
     ): TypedPropertyDescriptor<(...args: any[]) => any> | void => {
-        console.log(target);
-        console.log(propertyKey);
-        console.log(descriptor);
-        descriptor.value = () => {
-            console.log('NO ERROR');
+        const method = descriptor.value;
+        descriptor.value = async (...args: any[]) => {
+            try {
+                return await method?.apply(target, args);
+            } catch (e) {
+                if (e instanceof Error) {
+                    console.log(e);
+                    if (rethrow) {
+                        throw e;
+                    }
+                }
+            }
         };
     };
 }
