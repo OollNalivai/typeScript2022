@@ -25,7 +25,7 @@ class UserService {
 __decorate([
     Catch({ rethrow: true })
 ], UserService.prototype, "getUserInDatabase", null);
-function Catch({ rethrow } = { rethrow: false }) {
+function Catch({ rethrow } = { rethrow: true }) {
     return (target, _, descriptor) => {
         const method = descriptor.value;
         descriptor.value = (...args) => __awaiter(this, void 0, void 0, function* () {
@@ -34,7 +34,7 @@ function Catch({ rethrow } = { rethrow: false }) {
             }
             catch (e) {
                 if (e instanceof Error) {
-                    console.log(e);
+                    console.log(e.message);
                     if (rethrow) {
                         throw e;
                     }

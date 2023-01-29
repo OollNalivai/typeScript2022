@@ -7,13 +7,13 @@ interface UserServiceInterface {
 class UserService implements UserServiceInterface {
     users: number = 1000;
 
-    @Catch({rethrow: true})
+    @Catch({ rethrow: true })
     getUserInDatabase(): number {
         throw new Error('ERROR');
     }
 }
 
-function Catch({rethrow}: { rethrow: boolean } = {rethrow: false}) {
+function Catch({ rethrow }: { rethrow: boolean } = { rethrow: true }) {
     return (
         target: Object,
         _: string | symbol,
@@ -25,7 +25,7 @@ function Catch({rethrow}: { rethrow: boolean } = {rethrow: false}) {
                 return await method?.apply(target, args);
             } catch (e) {
                 if (e instanceof Error) {
-                    console.log(e);
+                    console.log(e.message);
                     if (rethrow) {
                         throw e;
                     }
