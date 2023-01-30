@@ -5,37 +5,30 @@ interface UserServiceInterface {
 class UserService implements UserServiceInterface {
     private _users: number;
 
-    @Log()
-    set users(num: number) {
-        this._users = num;
-    }
-
-    get users() {
+    getUserInDatabase(): number {
         return this._users;
     }
 
-    getUserInDatabase(): number {
-        throw new Error('ERROR');
+    setUserInDatabase(@Positive() num: number): void {
+        this._users = num;
     }
 }
 
-function Log() {
+function Positive() {
     return (
         target: Object,
-        _: string | symbol,
-        descriptor: PropertyDescriptor
+        propertyKey: string | symbol,
+        parameterIndex: number
     ) => {
-        const set = descriptor.set;
-        descriptor.set = (...args: any) => {
-            console.log(args);
-            set?.apply(target, args);
-        };
+        console.log(target)
+        console.log(propertyKey)
+        console.log(parameterIndex)
     };
 }
-
-const userService = new UserService();
-userService.users = 1;
-console.log(userService.users);
+//
+// const userService = new UserService();
+// userService.users = 1;
+// console.log(userService.users);
 
 
 
