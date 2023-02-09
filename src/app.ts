@@ -1,10 +1,22 @@
-import { toJson, toRJson, toJs } from 'really-relaxed-json';
+interface ProviderInterface {
+    sendMessage(message: string): void;
 
-// const rjson = '[ one two three {foo:bar} ]';
-// const json = toJson(rjson);
+    connect<T>(config: T): void;
 
-// const json = '["one", "two", "three", {"foo": "bar"}]'
-// const rjson = toRJson(json)
+    disconnect(): void;
+}
 
-const js = toJs('["one", "two", "three", {"foo": "bar"}]')
-console.log(js);
+class TelegramProvider implements ProviderInterface {
+
+    sendMessage(message: string): void {
+        console.log(message);
+    }
+
+    connect<T>(config: T): void {
+        console.log(config);
+    }
+
+    disconnect(): void {
+        console.log("Disconnected");
+    }
+}
