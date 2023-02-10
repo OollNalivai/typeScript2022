@@ -1,5 +1,44 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const really_relaxed_json_1 = require("really-relaxed-json");
-const js = (0, really_relaxed_json_1.toJs)('["one", "two", "three", {"foo": "bar"}]');
-console.log(js);
+class TelegramProvider {
+    sendMessage(message) {
+        console.log(message);
+    }
+    connect(config) {
+        console.log(config);
+    }
+    disconnect() {
+        console.log('Disconnected TG');
+    }
+}
+class WhatsUpProvider {
+    sendMessage(message) {
+        console.log(message);
+    }
+    connect(config) {
+        console.log(config);
+    }
+    disconnect() {
+        console.log('Disconnected WU');
+    }
+}
+class NotifacationSender {
+    constructor(provider) {
+        this.provider = provider;
+    }
+    send() {
+        this.provider.connect('Connect');
+        this.provider.sendMessage('message');
+        this.provider.disconnect();
+    }
+}
+class DelayNotifacationSender extends NotifacationSender {
+    constructor(provider) {
+        super(provider);
+    }
+    sendDalayed() {
+    }
+}
+const sender = new NotifacationSender(new TelegramProvider());
+sender.send();
+const sender2 = new NotifacationSender((new WhatsUpProvider()));
+sender2.send();
