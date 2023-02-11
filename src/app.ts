@@ -1,66 +1,49 @@
-interface ProviderInterface {
-    sendMessage(message: string): void;
+interface InsuranceInterface {
+    id: number;
+    status: string;
 
-    connect(config: unknown): void;
+    setVehicle(vehicle: any): void;
 
-    disconnect(): void;
+    submit(): Promise<boolean>;
 }
 
-class TelegramProvider implements ProviderInterface {
+class TFInsurance implements InsuranceInterface {
+    id: number;
+    status: string;
+    private vehicle: any;
 
-    sendMessage(message: string): void {
-        console.log(message);
+    setVehicle(vehicle: any): void {
+        this.vehicle = vehicle;
     }
 
-    connect(config: string): void {
-        console.log(config);
-    }
-
-    disconnect(): void {
-        console.log('Disconnected TG');
-    }
-}
-
-class WhatsUpProvider implements ProviderInterface {
-
-    sendMessage(message: string): void {
-        console.log(message);
-    }
-
-    connect(config: string): void {
-        console.log(config);
-    }
-
-    disconnect(): void {
-        console.log('Disconnected WU');
+    async submit(): Promise<boolean> {
+        const res = await fetch('',
+            {
+                method: 'POST',
+                body: JSON.stringify({vehicle: this.vehicle})
+            });
+        const data = await res.json();
+        return data.isSuccess;
     }
 }
 
-class NotifacationSender {
+class ABInsurance implements InsuranceInterface {
+    id: number;
+    status: string;
+    private vehicle: any;
 
-    constructor(private provider: ProviderInterface) {
+    setVehicle(vehicle: any): void {
+        this.vehicle = vehicle;
     }
 
-    send() {
-        this.provider.connect('Connect');
-        this.provider.sendMessage('message');
-        this.provider.disconnect();
-    }
-}
-
-class DelayNotifacationSender extends NotifacationSender {
-
-    constructor(provider: ProviderInterface) {
-        super(provider);
-    }
-
-    sendDalayed() {
-
+    async submit(): Promise<boolean> {
+        const res = await fetch('ab',
+            {
+                method: 'POST',
+                body: JSON.stringify({vehicle: this.vehicle})
+            });
+        const data = await res.json();
+        return data.yes;
     }
 }
 
-const sender = new NotifacationSender(new TelegramProvider());
-sender.send();
-
-const sender2 = new NotifacationSender((new WhatsUpProvider()));
-sender2.send();
