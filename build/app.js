@@ -38,3 +38,36 @@ class ABInsurance {
         });
     }
 }
+class InsuranceFactory {
+    saveHistory(ins) {
+        this.db.save(ins.id, ins.status);
+    }
+}
+class TFInsuranceFactory extends InsuranceFactory {
+    createInsurance() {
+        return new TFInsurance();
+    }
+}
+class ABInsuranceFactory extends InsuranceFactory {
+    createInsurance() {
+        return new ABInsurance();
+    }
+}
+const tfInsuranceFactory = new TFInsuranceFactory();
+const ins = tfInsuranceFactory.createInsurance();
+tfInsuranceFactory.saveHistory(ins);
+const INSURANCE_TYPE = {
+    tf: TFInsurance,
+    ab: ABInsurance
+};
+class InsuranceFactoryAlt {
+    createInsurance(type) {
+        return INSURANCE_TYPE[type];
+    }
+    saveHistory(ins) {
+        this.db.save(ins.id, ins.status);
+    }
+}
+const InsuranceFactoryAltC = new InsuranceFactoryAlt();
+const ins2 = new (InsuranceFactoryAltC.createInsurance('tf'));
+InsuranceFactoryAltC.saveHistory(ins2);

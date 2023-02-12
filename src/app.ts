@@ -47,3 +47,51 @@ class ABInsurance implements InsuranceInterface {
     }
 }
 
+abstract class InsuranceFactory {
+    db: any;
+
+    abstract createInsurance(): InsuranceInterface
+
+    saveHistory(ins: InsuranceInterface) {
+        this.db.save(ins.id, ins.status);
+    }
+}
+
+class TFInsuranceFactory extends InsuranceFactory {
+    createInsurance(): TFInsurance {
+        return new TFInsurance();
+    }
+}
+
+class ABInsuranceFactory extends InsuranceFactory {
+    createInsurance(): ABInsurance {
+        return new ABInsurance();
+    }
+}
+
+const tfInsuranceFactory = new TFInsuranceFactory();
+const ins = tfInsuranceFactory.createInsurance();
+tfInsuranceFactory.saveHistory(ins);
+
+const INSURANCE_TYPE = {
+    tf: TFInsurance,
+    ab: ABInsurance
+};
+
+type IT = typeof INSURANCE_TYPE;
+
+class InsuranceFactoryAlt {
+    db: any;
+
+    createInsurance<T extends keyof IT>(type: T): IT[T] {
+        return INSURANCE_TYPE[type];
+    }
+
+    saveHistory(ins: InsuranceInterface) {
+        this.db.save(ins.id, ins.status);
+    }
+}
+
+const InsuranceFactoryAltC = new InsuranceFactoryAlt();
+const ins2 = new (InsuranceFactoryAltC.createInsurance('tf'));
+InsuranceFactoryAltC.saveHistory(ins2)
