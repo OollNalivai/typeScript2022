@@ -1,97 +1,39 @@
-interface InsuranceInterface {
-    id: number;
-    status: string;
+class MyMap {
+    private static instance: MyMap;
 
-    setVehicle(vehicle: any): void;
+    map: Map<number, string> = new Map();
 
-    submit(): Promise<boolean>;
-}
-
-class TFInsurance implements InsuranceInterface {
-    id: number;
-    status: string;
-    private vehicle: any;
-
-    setVehicle(vehicle: any): void {
-        this.vehicle = vehicle;
+    private constructor() {
     }
 
-    async submit(): Promise<boolean> {
-        const res = await fetch('',
-            {
-                method: 'POST',
-                body: JSON.stringify({vehicle: this.vehicle})
-            });
-        const data = await res.json();
-        return data.isSuccess;
+    clean() {
+        this.map = new Map();
+    }
+
+    public static get(): MyMap {
+        if (!MyMap.instance) {
+            MyMap.instance = new MyMap();
+        }
+
+        return MyMap.instance;
     }
 }
 
-class ABInsurance implements InsuranceInterface {
-    id: number;
-    status: string;
-    private vehicle: any;
-
-    setVehicle(vehicle: any): void {
-        this.vehicle = vehicle;
-    }
-
-    async submit(): Promise<boolean> {
-        const res = await fetch('ab',
-            {
-                method: 'POST',
-                body: JSON.stringify({vehicle: this.vehicle})
-            });
-        const data = await res.json();
-        return data.yes;
+class Service1 {
+    addMap(key: number, value: string) {
+        const myMap = MyMap.get();
+        myMap.map.set(key, value);
     }
 }
 
-abstract class InsuranceFactory {
-    db: any;
-
-    abstract createInsurance(): InsuranceInterface
-
-    saveHistory(ins: InsuranceInterface) {
-        this.db.save(ins.id, ins.status);
+class Service2 {
+    getMap(key: number) {
+        const myMap = MyMap.get();
+        console.log(myMap.map.get(key));
+        myMap.clean();
+        console.log(myMap.map.get(key));
     }
 }
 
-class TFInsuranceFactory extends InsuranceFactory {
-    createInsurance(): TFInsurance {
-        return new TFInsurance();
-    }
-}
-
-class ABInsuranceFactory extends InsuranceFactory {
-    createInsurance(): ABInsurance {
-        return new ABInsurance();
-    }
-}
-
-const tfInsuranceFactory = new TFInsuranceFactory();
-const ins = tfInsuranceFactory.createInsurance();
-tfInsuranceFactory.saveHistory(ins);
-
-const INSURANCE_TYPE = {
-    tf: TFInsurance,
-    ab: ABInsurance
-};
-
-type IT = typeof INSURANCE_TYPE;
-
-class InsuranceFactoryAlt {
-    db: any;
-
-    createInsurance<T extends keyof IT>(type: T): IT[T] {
-        return INSURANCE_TYPE[type];
-    }
-
-    saveHistory(ins: InsuranceInterface) {
-        this.db.save(ins.id, ins.status);
-    }
-}
-
-const InsuranceFactoryAltC = new InsuranceFactoryAlt();
-const ins2 = new (InsuranceFactoryAltC.createInsurance('tf'));
-InsuranceFactoryAltC.saveHistory(ins2)
+new Service1().addMap(1, 'Работает');
+new Service2().getMap(1);
