@@ -1,19 +1,43 @@
 "use strict";
-class UserHistory {
-    constructor(email, name) {
-        this.email = email;
-        this.name = name;
-        this.createdAt = new Date();
+var ImageFormat;
+(function (ImageFormat) {
+    ImageFormat["Png"] = "png";
+    ImageFormat["Jpeg"] = "jpeg";
+})(ImageFormat || (ImageFormat = {}));
+class ImageBuilder {
+    constructor() {
+        this.formats = [];
+        this.resolution = [];
     }
-    clone() {
-        let target = new UserHistory(this.email, this.name);
-        target.createdAt = this.createdAt;
-        return target;
+    addPng() {
+        if (this.formats.includes(ImageFormat.Png)) {
+            return this;
+        }
+        this.formats.push(ImageFormat.Png);
+        return this;
+    }
+    addJpeg() {
+        if (this.formats.includes(ImageFormat.Jpeg)) {
+            return this;
+        }
+        this.formats.push(ImageFormat.Jpeg);
+        return this;
+    }
+    addResolution(width, height) {
+        this.resolution.push({ width, height });
+        return this;
+    }
+    build() {
+        const res = [];
+        for (const r of this.resolution) {
+            for (const f of this.formats) {
+                res.push({
+                    format: f,
+                    width: r.width,
+                    height: r.height
+                });
+            }
+        }
+        return res;
     }
 }
-let user = new UserHistory('a@dsfsd.re', 'sadads');
-console.log(user);
-let user2 = user.clone();
-user2.email = 'sdf@dsf.sdf';
-console.log(user);
-console.log(user2);
