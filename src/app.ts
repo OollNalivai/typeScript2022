@@ -1,62 +1,46 @@
-enum ImageFormat {
-    Png = 'png',
-    Jpeg = 'jpeg'
+class Notify {
+    send(template: string, to: string) {
+        console.log(`Отправляю ${template}: ${to}`);
+    }
 }
 
-interface ResolutionInterface {
-    width: number;
-    height: number;
+class Log {
+    log(message: string) {
+        console.log(message);
+    }
 }
 
-interface ImageConversionInterface extends ResolutionInterface {
-    format: ImageFormat;
+class Template {
+    private template = [
+        {name: 'other', template: '<h1>Hello World!</h1>'}
+    ];
+
+    getByName(name: string) {
+        return this.template.find(t => t.name === name);
+    }
 }
 
-class ImageBuilder {
-    private formats: ImageFormat[] = [];
-    private resolution: ResolutionInterface[] = [];
+class NotificationFacade {
+    private notify: Notify;
+    private logger: Log;
+    private template: Template;
 
-    addPng() {
-        if (this.formats.includes(ImageFormat.Png)) {
-            return this;
+    constructor() {
+        this.notify = new Notify();
+        this.template = new Template();
+        this.logger = new Log();
+    }
+
+    send(to: string, templateName: string) {
+        const data = this.template.getByName(templateName);
+        if (!data) {
+            this.logger.log('Не найден шаблон');
+            return;
         }
-        this.formats.push(ImageFormat.Png);
-        return this;
-    }
-
-    addJpeg() {
-        if (this.formats.includes(ImageFormat.Jpeg)) {
-            return this;
-        }
-        this.formats.push(ImageFormat.Jpeg);
-        return this;
-    }
-
-    addResolution(width: number, height: number) {
-        this.resolution.push({width, height});
-        return this;
-    }
-
-    build(): ImageConversionInterface[] {
-        const res: ImageConversionInterface[] = [];
-        for (const r of this.resolution) {
-            for (const f of this.formats) {
-                res.push({
-                    format: f,
-                    width: r.width,
-                    height: r.height
-                });
-            }
-        }
-
-        return res;
+        this.notify.send(data.template, to);
+        this.logger.log('Шаблон отправлен');
     }
 }
 
-console.log(new ImageBuilder()
-    .addJpeg()
-    .addPng()
-    .addResolution(100, 50)
-    .addResolution(200, 100)
-    .build()
-)
+const s = new NotificationFacade();
+s.send('a@d.sa', 'other')
