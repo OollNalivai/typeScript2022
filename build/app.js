@@ -8,11 +8,20 @@ class KVDatabase {
     }
 }
 class PersistentDB {
-    savePersistent(_) {
+    savePersistent(data) {
+        console.log(data);
     }
 }
-class PersistentDBAdapter {
+class PersistentDBAdapter extends KVDatabase {
+    constructor(database) {
+        super();
+        this.database = database;
+    }
+    save(key, value) {
+        this.database.savePersistent({ key, value });
+    }
 }
-function run(base) {
+function runR(base) {
     base.save('key', 'myValue');
 }
+runR(new PersistentDBAdapter(new PersistentDB));

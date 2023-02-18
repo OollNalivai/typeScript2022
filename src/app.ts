@@ -6,15 +6,23 @@ class KVDatabase {
 }
 
 class PersistentDB {
-    savePersistent(_: Object) {
-        //
+    savePersistent(data: Object) {
+        console.log(data);
     }
 }
 
-class PersistentDBAdapter {
+class PersistentDBAdapter extends KVDatabase {
+    constructor(public database: PersistentDB) {
+        super();
+    }
 
+     override save(key: string, value: string): void {
+         this.database.savePersistent({key, value})
+     }
 }
 
-function run(base: KVDatabase) {
+function runR(base: KVDatabase) {
     base.save('key', 'myValue')
 }
+
+runR(new PersistentDBAdapter(new PersistentDB))
