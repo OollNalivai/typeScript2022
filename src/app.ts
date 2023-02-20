@@ -1,36 +1,19 @@
-interface PaymentAPIInterface {
-    getPaymentDetail(id: number): PaymentDetailInterface | undefined;
-}
+abstract class DeliveryItem {
+    items: DeliveryItem[]
 
-interface PaymentDetailInterface {
-    id: number;
-    sum: number;
-}
-
-class PaymentAPI implements PaymentAPIInterface {
-    private data = [{id: 1, sum: 10000}];
-
-    getPaymentDetail(id: number): PaymentDetailInterface | undefined {
-        return this.data.find(d => d.id === id);
-    }
-}
-
-class PaymentAccessProxy implements PaymentAPIInterface {
-    constructor(private api: PaymentAPI, private UserId: number) {
+    addItem(item: DeliveryItem) {
+        this.items.push(item)
     }
 
-    getPaymentDetail(id: number): PaymentDetailInterface | undefined {
-        if (this.UserId === 1) {
-            return this.api.getPaymentDetail(id);
-        }
-        console.log('Попытка получить данные платежа!');
-        return undefined;
-    }
+    abstract getPrice(): number
 }
 
-const proxy = new PaymentAccessProxy(new PaymentAPI(), 1);
-console.log(proxy.getPaymentDetail(1));
+export class DeliveryShop extends DeliveryItem {
+    constructor(public deliveryFee: number) {
+        super();
+    }
 
-
-const proxy2 = new PaymentAccessProxy(new PaymentAPI(), 2);
-console.log(proxy2.getPaymentDetail(1));
+    getPrice(): number {
+        return 0
+    }
+}
