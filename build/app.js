@@ -12,7 +12,7 @@ class DeliveryShop extends DeliveryItem {
         this.deliveryFee = deliveryFee;
     }
     getPrice() {
-        return 0;
+        return this.items.reduce((acc, i) => acc += i.getPrice(), 0) + this.deliveryFee;
     }
 }
 exports.DeliveryShop = DeliveryShop;

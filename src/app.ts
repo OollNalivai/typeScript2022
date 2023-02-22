@@ -14,6 +14,6 @@ export class DeliveryShop extends DeliveryItem {
     }
 
     getPrice(): number {
-        return 0
+        return this.items.reduce((acc: number, i: DeliveryItem) => acc += i.getPrice(), 0) + this.deliveryFee;
     }
 }
