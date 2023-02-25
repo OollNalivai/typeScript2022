@@ -47,3 +47,14 @@ class Controller extends AbstractMiddleware {
         return {success: request};
     }
 }
+
+const controller = new Controller();
+const validate = new ValidateMiddleware();
+const auth = new AuthidMiddleware();
+
+auth.next(validate).next(controller);
+
+console.log(auth.handle({
+    userId: 1,
+    body: 'I\'m ok'
+}));
