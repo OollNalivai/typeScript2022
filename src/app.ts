@@ -1,60 +1,29 @@
-interface MiddlewareInterface {
-    next(mid: MiddlewareInterface): MiddlewareInterface;
-
-    handle(request: any): any;
+interface Mediator {
+    notify(sender: string, event: string): void;
 }
 
-abstract class AbstractMiddleware implements MiddlewareInterface {
+abstract class Mediated {
+    mediator: Mediator;
 
-    private nextMiddleware: MiddlewareInterface;
-
-    next(mid: MiddlewareInterface): MiddlewareInterface {
-        this.nextMiddleware = mid;
-        return mid;
-    }
-
-    handle(request: any): any {
-        if (this.nextMiddleware) {
-            return this.nextMiddleware.handle(request);
-        }
-        return;
+    setMediator(mediator: Mediator) {
+        this.mediator = mediator;
     }
 }
 
-class AuthidMiddleware extends AbstractMiddleware {
-    override handle(request: any) {
-        console.log('AuthidMiddleware');
-        if (request.userId === 1) {
-            return super.handle(request);
-        }
-        return {error: 'Вы не авторизированы'};
+class Notifications {
+    sand() {
+        console.log('Отправляю уведомление');
     }
 }
 
-class ValidateMiddleware extends AbstractMiddleware {
-    override handle(request: any) {
-        console.log('ValidateMiddleware');
-        if (request.body) {
-            return super.handle(request);
-        }
-        return {error: 'Нет body'};
+class Log {
+    log(message: string) {
+        console.log(message);
     }
 }
 
-class Controller extends AbstractMiddleware {
-    override handle(request: any) {
-        console.log('Controller');
-        return {success: request};
+class EventHandler extends Mediated{
+    myEvent() {
+        this.mediator.notify('', '')
     }
 }
-
-const controller = new Controller();
-const validate = new ValidateMiddleware();
-const auth = new AuthidMiddleware();
-
-auth.next(validate).next(controller);
-
-console.log(auth.handle({
-    userId: 1,
-    body: 'I\'m ok'
-}));
