@@ -11,7 +11,7 @@ abstract class Mediated {
 }
 
 class Notifications {
-    sand() {
+    send() {
         console.log('Отправляю уведомление');
     }
 }
@@ -22,8 +22,37 @@ class Log {
     }
 }
 
-class EventHandler extends Mediated{
+class EventHandler extends Mediated {
     myEvent() {
-        this.mediator.notify('', '')
+        this.mediator.notify('EventHandler', 'myEvent');
     }
 }
+
+class NotificationMediator implements Mediator {
+    constructor(
+        public notifications: Notifications,
+        public logger: Log,
+        public eventHandler: EventHandler
+    ) {
+    }
+
+    notify(_: string, event: string): void {
+        switch (event) {
+            case 'myEvent':
+                this.notifications.send();
+                this.logger.log('Едрыть, отправлено!');
+                break;
+        }
+    }
+}
+
+const handler = new EventHandler();
+const logger = new Log();
+const notifications = new Notifications();
+
+const m = new NotificationMediator(
+    notifications, logger, handler
+);
+
+handler.setMediator(m);
+handler.myEvent();
