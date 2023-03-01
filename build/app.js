@@ -1,42 +1,35 @@
 "use strict";
-class Mediated {
-    setMediator(mediator) {
-        this.mediator = mediator;
+class User {
+    constructor(userId) {
+        this.userId = userId;
     }
 }
-class Notifications {
-    send() {
-        console.log('Отправляю уведомление');
+class CommandHistory {
+    constructor() {
+        this.commands = [];
+    }
+    push(command) {
+        this.commands.push(command);
+    }
+    remove(command) {
+        this.commands = this.commands.filter(c => c.commandId !== command.commandId);
     }
 }
-class Log {
-    log(message) {
-        console.log(message);
+class Commad {
+    constructor(histoty) {
+        this.histoty = histoty;
+        this.commandId = Math.random();
     }
 }
-class EventHandler extends Mediated {
-    myEvent() {
-        this.mediator.notify('EventHandler', 'myEvent');
+class UserService {
+    saveUser(user) {
+        console.log(`Сохраняю пользователя с id ${user.userId}`);
+    }
+    deleteUser(userId) {
+        console.log(`Удаляем пользователя с id ${userId}`);
     }
 }
-class NotificationMediator {
-    constructor(notifications, logger, eventHandler) {
-        this.notifications = notifications;
-        this.logger = logger;
-        this.eventHandler = eventHandler;
-    }
-    notify(_, event) {
-        switch (event) {
-            case 'myEvent':
-                this.notifications.send();
-                this.logger.log('Едрыть, отправлено!');
-                break;
-        }
+class Contriller {
+    run() {
     }
 }
-const handler = new EventHandler();
-const logger = new Log();
-const notifications = new Notifications();
-const m = new NotificationMediator(notifications, logger, handler);
-handler.setMediator(m);
-handler.myEvent();
