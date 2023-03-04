@@ -25,6 +25,23 @@ abstract class Commad {
     }
 }
 
+class AddUserCommand extends Commad {
+
+    constructor(private user: User, private receiver: UserService, history: CommandHistory) {
+        super(history);
+    }
+
+    execute(): void {
+        this.receiver.saveUser(this.user);
+        this.histoty.push(this);
+    }
+
+    undo() {
+        this.receiver.deleteUser(this.user.userId);
+        this.histoty.remove(this);
+    }
+}
+
 class UserService {
     saveUser(user: User) {
         console.log(`Сохраняю пользователя с id ${user.userId}`);

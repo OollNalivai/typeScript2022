@@ -21,6 +21,21 @@ class Commad {
         this.commandId = Math.random();
     }
 }
+class AddUserCommand extends Commad {
+    constructor(user, receiver, history) {
+        super(history);
+        this.user = user;
+        this.receiver = receiver;
+    }
+    execute() {
+        this.receiver.saveUser(this.user);
+        this.histoty.push(this);
+    }
+    undo() {
+        this.receiver.deleteUser(this.user.userId);
+        this.histoty.remove(this);
+    }
+}
 class UserService {
     saveUser(user) {
         console.log(`Сохраняю пользователя с id ${user.userId}`);
