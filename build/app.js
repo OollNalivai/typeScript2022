@@ -44,7 +44,21 @@ class UserService {
         console.log(`Удаляем пользователя с id ${userId}`);
     }
 }
-class Contriller {
+class Controller {
+    constructor() {
+        this.history = new CommandHistory();
+    }
+    addReceiver(receiver) {
+        this.receiver = receiver;
+    }
     run() {
+        const addUserCommand = new AddUserCommand(new User(1), this.receiver, this.history);
+        addUserCommand.execute();
+        console.log(addUserCommand.histoty);
+        addUserCommand.undo();
+        console.log(addUserCommand.histoty);
     }
 }
+const controller = new Controller();
+controller.addReceiver(new UserService());
+controller.run();

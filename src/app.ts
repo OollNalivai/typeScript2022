@@ -52,8 +52,28 @@ class UserService {
     }
 }
 
-class Contriller {
-    run() {
+class Controller {
+    receiver: UserService;
+    history: CommandHistory = new CommandHistory();
+
+    addReceiver(receiver: UserService) {
+        this.receiver = receiver;
 
     }
+
+    run() {
+        const addUserCommand = new AddUserCommand(
+            new User(1),
+            this.receiver,
+            this.history
+        );
+        addUserCommand.execute();
+        console.log(addUserCommand.histoty);
+        addUserCommand.undo();
+        console.log(addUserCommand.histoty);
+    }
 }
+
+const controller = new Controller();
+controller.addReceiver(new UserService());
+controller.run();
