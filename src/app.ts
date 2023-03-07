@@ -1,80 +1,46 @@
-class DocumentItem {
-    text: string;
-    state: DocumentItemState;
+class User {
+    gitHubToken: string;
+    jwtToken: string;
+}
 
-    constructor() {
-        this.setState(new DraftDocumentItemState());
+interface AuthStrategy {
+    auth(user: User): boolean;
+}
+
+class Auth {
+
+    constructor(private strategy: AuthStrategy) {
     }
 
-    getState() {
-        return this.state;
+    setStrategy(strategy: AuthStrategy) {
+        this.strategy = strategy;
+
     }
 
-    setState(state: DocumentItemState) {
-        this.state = state;
-        this.state.setContext(this);
-    }
-
-    publishDoc() {
-        this.state.publish();
-    }
-
-    deleteDoc() {
-        this.state.delete();
+    authUser(user: User): boolean {
+        return this.strategy.auth(user);
     }
 }
 
-abstract class DocumentItemState {
-    name: string;
-    item: DocumentItem;
-
-    setContext(item: DocumentItem) {
-        this.item = item;
-    }
-
-    abstract publish(): void
-
-    abstract delete(): void
-}
-
-class DraftDocumentItemState extends DocumentItemState {
-    constructor() {
-        super();
-        this.name = 'DraftDocument';
-
-    }
-
-    publish(): void {
-        console.log(`На сайт отправлен текст ${this.item.text}`);
-        this.item.setState(new PublishDocumentItemState());
-    }
-
-    delete(): void {
-        console.log('Документ удален');
+class JWTStrategy implements AuthStrategy {
+    auth(user: User): boolean {
+        return !!user.jwtToken;
     }
 }
 
-class PublishDocumentItemState extends DocumentItemState {
-    constructor() {
-        super();
-        this.name = 'PublishDocument';
-    }
-
-    publish(): void {
-        console.log('Нельзя опубликовать опубликованный документ');
-    }
-
-    delete(): void {
-        console.log('Снять с публикации');
-        this.item.setState(new DraftDocumentItemState());
+class GitHubStrategy implements AuthStrategy {
+    auth(user: User): boolean {
+        if (user.gitHubToken) {
+            // Идем в API
+            return true;
+        }
+        return false;
     }
 }
 
-const item = new DocumentItem();
-item.text = 'Мой пост';
-console.log(item.getState());
-item.publishDoc();
-console.log(item.getState());
-item.publishDoc();
-item.deleteDoc();
-console.log(item.getState());
+const user = new User();
+user.jwtToken = 'token';
+const auth = new Auth(new JWTStrategy());
+console.log(auth.authUser(user));
+auth.setStrategy(new GitHubStrategy());
+console.log(auth.authUser(user));
