@@ -1,33 +1,11 @@
 "use strict";
-class User {
-}
-class Auth {
-    constructor(strategy) {
-        this.strategy = strategy;
-    }
-    setStrategy(strategy) {
-        this.strategy = strategy;
-    }
-    authUser(user) {
-        return this.strategy.auth(user);
+class Task {
+    constructor(priority) {
+        this.priority = priority;
     }
 }
-class JWTStrategy {
-    auth(user) {
-        return !!user.jwtToken;
+class TaskList {
+    addTask(task) {
+        this.tasks.push(task);
     }
 }
-class GitHubStrategy {
-    auth(user) {
-        if (user.gitHubToken) {
-            return true;
-        }
-        return false;
-    }
-}
-const user = new User();
-user.jwtToken = 'token';
-const auth = new Auth(new JWTStrategy());
-console.log(auth.authUser(user));
-auth.setStrategy(new GitHubStrategy());
-console.log(auth.authUser(user));
