@@ -6,6 +6,17 @@ class Task {
 class TaskList {
     private tasks: Task[];
 
+    sortByPriority() {
+        this.tasks = this.tasks.sort((a, b) => {
+            // if (a.priority > b.priority) {
+            //     return 1;
+            // } else {
+            //     return -1
+            // }
+            return a.priority !== b.priority ? (a.priority > b.priority ? 1 : -1) : 0;
+        });
+    }
+
     addTask(task: Task) {
         this.tasks.push(task);
     }
@@ -26,22 +37,34 @@ interface IteratorInterface<T> {
 
     prev(): T | undefined;
 
-    index: number;
+    index(): number;
 }
 
 class PriorityTaskIterator implements IteratorInterface<Task> {
-    index: number;
+
+    private position: number = 0;
+    private taskList: TaskList;
+
+    constructor(taskList: TaskList) {
+        this.taskList = taskList;
+    }
 
     current(): Task | undefined {
-        return undefined;
+        return this.taskList.getTasks()[this.position];
     }
 
     next(): Task | undefined {
-        return undefined;
+        this.position += 1;
+        return this.taskList.getTasks()[this.position];
     }
 
     prev(): Task | undefined {
-        return undefined;
+        this.position -= 1;
+        return this.taskList.getTasks()[this.position];
+    }
+
+    index(): number {
+        return this.position;
     }
 
 }
