@@ -5,6 +5,11 @@ class Task {
     }
 }
 class TaskList {
+    sortByPriority() {
+        this.tasks = this.tasks.sort((a, b) => {
+            return a.priority !== b.priority ? (a.priority > b.priority ? 1 : -1) : 0;
+        });
+    }
     addTask(task) {
         this.tasks.push(task);
     }
@@ -16,13 +21,22 @@ class TaskList {
     }
 }
 class PriorityTaskIterator {
+    constructor(taskList) {
+        this.position = 0;
+        this.taskList = taskList;
+    }
     current() {
-        return undefined;
+        return this.taskList.getTasks()[this.position];
     }
     next() {
-        return undefined;
+        this.position += 1;
+        return this.taskList.getTasks()[this.position];
     }
     prev() {
-        return undefined;
+        this.position -= 1;
+        return this.taskList.getTasks()[this.position];
+    }
+    index() {
+        return this.position;
     }
 }
