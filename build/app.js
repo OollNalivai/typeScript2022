@@ -14,5 +14,11 @@ class SaveForm {
         console.log(data);
     }
 }
-class FirstAPI {
+class FirstAPI extends SaveForm {
+    fill(form) {
+        return form.name;
+    }
+    send(data) {
+        console.log(`Отправляю ${data}`);
+    }
 }
