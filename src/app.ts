@@ -21,10 +21,29 @@ abstract class SaveForm<T> {
 
 class FirstAPI extends SaveForm<string> {
     protected fill(form: Form): string {
-        return form.name
+        return form.name;
     }
+
     protected send(data: string): void {
-        console.log(`Отправляю ${data}`)
+        console.log(`Отправляю ${data}`);
     }
 
 }
+
+
+class SecondAPI extends SaveForm<{ fio: string }> {
+    protected fill(form: Form): { fio: string } {
+        return {fio: form.name};
+    }
+
+    protected send(data: { fio: string }): void {
+        console.log(`Отправляю ${data}`);
+    }
+
+}
+
+const form1 = new FirstAPI()
+form1.save(new Form("Васёк"))
+
+const form2 = new SecondAPI()
+form2.save(new Form("Васёк"))

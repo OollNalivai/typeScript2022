@@ -22,3 +22,15 @@ class FirstAPI extends SaveForm {
         console.log(`Отправляю ${data}`);
     }
 }
+class SecondAPI extends SaveForm {
+    fill(form) {
+        return { fio: form.name };
+    }
+    send(data) {
+        console.log(`Отправляю ${data}`);
+    }
+}
+const form1 = new FirstAPI();
+form1.save(new Form("Васёк"));
+const form2 = new SecondAPI();
+form2.save(new Form("Васёк"));
