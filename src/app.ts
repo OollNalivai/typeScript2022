@@ -1,49 +1,43 @@
-class Form {
-    constructor(public name: string) {
+interface Observer {
+    update(subject: Subject): void;
+}
+
+interface Subject {
+    attach(observer: Observer): void;
+
+    detach(observer: Observer): void;
+
+    notify(): void;
+}
+
+class Lead {
+    constructor(public name: string, public phone: string) {
     }
 }
 
-abstract class SaveForm<T> {
-    save(form: Form) {
-        const res = this.fill(form);
-        this.log(res);
-        this.send(res);
+class NewLead implements Subject {
+
+    private observers: Observer[] = [];
+    state: Lead;
+
+    attach(observer: Observer): void {
+        if (this.observers.includes(observer)) {
+            return;
+        }
+        this.observers.push(observer);
     }
 
-    protected abstract fill(form: Form): T;
-
-    protected log(data: T): void {
-        console.log(data);
+    detach(observer: Observer): void {
+        const observerIndex = this.observers.indexOf(observer);
+        if (observerIndex == -1) {
+            return;
+        }
+        this.observers.splice(observerIndex, 1);
     }
 
-    protected abstract send(data: T): void
+    notify(): void {
+        for (const observer of this.observers) {
+            observer.update(this);
+        }
+    }
 }
-
-class FirstAPI extends SaveForm<string> {
-    protected fill(form: Form): string {
-        return form.name;
-    }
-
-    protected send(data: string): void {
-        console.log(`Отправляю ${data}`);
-    }
-
-}
-
-
-class SecondAPI extends SaveForm<{ fio: string }> {
-    protected fill(form: Form): { fio: string } {
-        return {fio: form.name};
-    }
-
-    protected send(data: { fio: string }): void {
-        console.log(`Отправляю ${data}`);
-    }
-
-}
-
-const form1 = new FirstAPI()
-form1.save(new Form("Васёк"))
-
-const form2 = new SecondAPI()
-form2.save(new Form("Васёк"))

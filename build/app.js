@@ -1,36 +1,30 @@
 "use strict";
-class Form {
-    constructor(name) {
+class Lead {
+    constructor(name, phone) {
         this.name = name;
+        this.phone = phone;
     }
 }
-class SaveForm {
-    save(form) {
-        const res = this.fill(form);
-        this.log(res);
-        this.send(res);
+class NewLead {
+    constructor() {
+        this.observers = [];
     }
-    log(data) {
-        console.log(data);
+    attach(observer) {
+        if (this.observers.includes(observer)) {
+            return;
+        }
+        this.observers.push(observer);
     }
-}
-class FirstAPI extends SaveForm {
-    fill(form) {
-        return form.name;
+    detach(observer) {
+        const observerIndex = this.observers.indexOf(observer);
+        if (observerIndex == -1) {
+            return;
+        }
+        this.observers.splice(observerIndex, 1);
     }
-    send(data) {
-        console.log(`Отправляю ${data}`);
-    }
-}
-class SecondAPI extends SaveForm {
-    fill(form) {
-        return { fio: form.name };
-    }
-    send(data) {
-        console.log(`Отправляю ${data}`);
+    notify() {
+        for (const observer of this.observers) {
+            observer.update(this);
+        }
     }
 }
-const form1 = new FirstAPI();
-form1.save(new Form("Васёк"));
-const form2 = new SecondAPI();
-form2.save(new Form("Васёк"));
