@@ -41,3 +41,27 @@ class NewLead implements Subject {
         }
     }
 }
+
+class NotificationService implements Observer {
+    update(subject: Subject): void {
+        console.log(`NotificationService получил уведомление`)
+        console.log(subject)
+    }
+}
+
+class LeadService implements Observer {
+    update(subject: Subject): void {
+        console.log(`Lead получил уведомление`)
+        console.log(subject)
+    }
+}
+const subject = new NewLead()
+subject.state = new Lead('Anton', '00132124')
+const s1 = new NotificationService()
+const s2 = new LeadService()
+
+subject.attach(s1)
+subject.attach(s2)
+subject.notify()
+subject.detach(s1)
+subject.notify()
